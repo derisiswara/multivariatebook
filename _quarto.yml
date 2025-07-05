@@ -1,0 +1,72 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Quantitative Methods with RStudio: Application for Management and Business Research"
+  author: 
+    - "Deri Siswara"
+    - "Nafisa Berliana Indah Pratiwi"
+  date: today
+  chapters:
+    - index.qmd
+    - 01-Bab1.qmd
+    - 02-Bab2.qmd
+    - 03-Bab3.qmd
+    - 04-Bab4.qmd
+    - 05-Bab5.qmd
+    - 06-Bab6.qmd
+    - 07-Bab7.qmd
+    - 08-Bab8.qmd
+  cover-image: images/cover.jpeg
+  favicon: images/cover.jpeg
+  repo-url: https://github.com/derisiswara/multivariatebook
+  downloads: [pdf, epub]
+  sharing: [twitter, facebook, linkedin]
+  
+bibliography: 
+  - book.bib
+  - packages.bib
+  
+csl: chicago-fullnote-bibliography.csl
+
+format:
+  html:
+    theme: 
+      light: cosmo
+      dark: darkly
+    css: style.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    link-external-newwindow: true
+    
+  pdf:
+    documentclass: book
+    include-in-header: preamble.tex
+    pdf-engine: xelatex
+    citation-package: natbib
+    keep-tex: true
+    toc: true
+    number-sections: true
+    
+  epub:
+    toc: true
+    number-sections: true
+
+knitr:
+  opts_chunk:
+    echo: true
+    warning: false
+    message: false
+    cache: false
+    fig.align: center
+    fig.width: 8
+    fig.height: 6
+
+execute:
+  freeze: auto
