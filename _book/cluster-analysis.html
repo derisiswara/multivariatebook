@@ -1,312 +1,532 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research</title>
-<meta name="author" content="Deri Siswara and Nafisa Berliana Indah Pratiwi">
-<meta name="description" content="5.1 Metode berhirarki Ref: https://rpubs.com/odenipinedo/cluster-analysis-in-R library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi &lt;-...">
-<meta name="generator" content="bookdown 0.38 with bs4_book()">
-<meta property="og:title" content="Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research">
-<meta property="og:type" content="book">
-<meta property="og:description" content="5.1 Metode berhirarki Ref: https://rpubs.com/odenipinedo/cluster-analysis-in-R library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi &lt;-...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research">
-<meta name="twitter:description" content="5.1 Metode berhirarki Ref: https://rpubs.com/odenipinedo/cluster-analysis-in-R library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi &lt;-...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
-    
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  </style>
-<link rel="stylesheet" href="style.css">
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::bs4_book,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::bs4_book,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::bs4_book,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Deri Siswara and Nafisa Berliana Indah Pratiwi" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="discriminant-analysis.html"/>
+<link rel="next" href="pca-analysis-and-biplot.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">Quantitative Methods with RStudio: Application for Management and Business Research</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="1" data-path="basics-of-r.html"><a href="basics-of-r.html"><i class="fa fa-check"></i><b>1</b> Basics of R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="basics-of-r.html"><a href="basics-of-r.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="basics-of-r.html"><a href="basics-of-r.html#types-of-objects-in-r"><i class="fa fa-check"></i><b>1.2</b> Types of Objects in R</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="basics-of-r.html"><a href="basics-of-r.html#vector"><i class="fa fa-check"></i><b>1.2.1</b> Vector</a></li>
+<li class="chapter" data-level="1.2.2" data-path="basics-of-r.html"><a href="basics-of-r.html#factor"><i class="fa fa-check"></i><b>1.2.2</b> Factor</a></li>
+<li class="chapter" data-level="1.2.3" data-path="basics-of-r.html"><a href="basics-of-r.html#list"><i class="fa fa-check"></i><b>1.2.3</b> List</a></li>
+<li class="chapter" data-level="1.2.4" data-path="basics-of-r.html"><a href="basics-of-r.html#data-frame"><i class="fa fa-check"></i><b>1.2.4</b> Data Frame</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="basics-of-r.html"><a href="basics-of-r.html#data-frame-management"><i class="fa fa-check"></i><b>1.3</b> Data Frame Management</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="basics-of-r.html"><a href="basics-of-r.html#r-package"><i class="fa fa-check"></i><b>1.3.1</b> R Package</a></li>
+<li class="chapter" data-level="1.3.2" data-path="basics-of-r.html"><a href="basics-of-r.html#data-management-with-dplyr"><i class="fa fa-check"></i><b>1.3.2</b> Data Management With <code>dplyr</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="basics-of-r.html"><a href="basics-of-r.html#visualization"><i class="fa fa-check"></i><b>1.4</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="basics-of-r.html"><a href="basics-of-r.html#histogram"><i class="fa fa-check"></i><b>1.4.1</b> Histogram</a></li>
+<li class="chapter" data-level="1.4.2" data-path="basics-of-r.html"><a href="basics-of-r.html#box-plot"><i class="fa fa-check"></i><b>1.4.2</b> Box Plot</a></li>
+<li class="chapter" data-level="1.4.3" data-path="basics-of-r.html"><a href="basics-of-r.html#barplot"><i class="fa fa-check"></i><b>1.4.3</b> Barplot</a></li>
+<li class="chapter" data-level="1.4.4" data-path="basics-of-r.html"><a href="basics-of-r.html#pie-chart"><i class="fa fa-check"></i><b>1.4.4</b> Pie Chart</a></li>
+<li class="chapter" data-level="1.4.5" data-path="basics-of-r.html"><a href="basics-of-r.html#scatter-plot"><i class="fa fa-check"></i><b>1.4.5</b> Scatter Plot</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html"><i class="fa fa-check"></i><b>2</b> Nonparametric Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html#correlation"><i class="fa fa-check"></i><b>2.1</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html#chi-square-test"><i class="fa fa-check"></i><b>2.1.1</b> Chi-Square Test</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html#difference-test"><i class="fa fa-check"></i><b>2.2</b> Difference Test</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html#two-sample-test-independent"><i class="fa fa-check"></i><b>2.2.1</b> Two sample test (Independent)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html#more-than-two-sample-test-independent"><i class="fa fa-check"></i><b>2.2.2</b> More than two sample test (Independent)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html#two-sample-test-dependent"><i class="fa fa-check"></i><b>2.2.3</b> Two sample test (Dependent)</a></li>
+<li class="chapter" data-level="2.2.4" data-path="nonparametric-statistics.html"><a href="nonparametric-statistics.html#more-than-two-sample-test-dependent"><i class="fa fa-check"></i><b>2.2.4</b> More than two sample test (Dependent)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>3</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#regresi-logistik-biner"><i class="fa fa-check"></i><b>3.1</b> Regresi Logistik Biner</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="logistic-regression.html"><a href="logistic-regression.html#data"><i class="fa fa-check"></i><b>3.1.1</b> Data</a></li>
+<li class="chapter" data-level="3.1.2" data-path="logistic-regression.html"><a href="logistic-regression.html#pemodelan"><i class="fa fa-check"></i><b>3.1.2</b> Pemodelan</a></li>
+<li class="chapter" data-level="3.1.3" data-path="logistic-regression.html"><a href="logistic-regression.html#odds-ratio"><i class="fa fa-check"></i><b>3.1.3</b> Odds Ratio</a></li>
+<li class="chapter" data-level="3.1.4" data-path="logistic-regression.html"><a href="logistic-regression.html#multikolineratitas"><i class="fa fa-check"></i><b>3.1.4</b> Multikolineratitas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="logistic-regression.html"><a href="logistic-regression.html#akurasi"><i class="fa fa-check"></i><b>3.1.5</b> Akurasi</a></li>
+<li class="chapter" data-level="3.1.6" data-path="logistic-regression.html"><a href="logistic-regression.html#kebaikan-model"><i class="fa fa-check"></i><b>3.1.6</b> Kebaikan Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#regresi-logistik-nominal-atau-multinominal"><i class="fa fa-check"></i><b>3.2</b> Regresi Logistik Nominal atau Multinominal</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#data-1"><i class="fa fa-check"></i><b>3.2.1</b> Data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#ubah-jadi-faktor"><i class="fa fa-check"></i><b>3.2.2</b> Ubah jadi faktor</a></li>
+<li class="chapter" data-level="3.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#pemodelan-1"><i class="fa fa-check"></i><b>3.2.3</b> Pemodelan</a></li>
+<li class="chapter" data-level="3.2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#odds-ratio-1"><i class="fa fa-check"></i><b>3.2.4</b> Odds Ratio</a></li>
+<li class="chapter" data-level="3.2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#multikolineratitas-1"><i class="fa fa-check"></i><b>3.2.5</b> Multikolineratitas</a></li>
+<li class="chapter" data-level="3.2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#akurasi-1"><i class="fa fa-check"></i><b>3.2.6</b> Akurasi</a></li>
+<li class="chapter" data-level="3.2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#kebaikan-model-1"><i class="fa fa-check"></i><b>3.2.7</b> Kebaikan Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="logistic-regression.html"><a href="logistic-regression.html#regresi-logistik-ordinal"><i class="fa fa-check"></i><b>3.3</b> Regresi Logistik Ordinal</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#data-2"><i class="fa fa-check"></i><b>3.3.1</b> Data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#pemodelan-2"><i class="fa fa-check"></i><b>3.3.2</b> Pemodelan</a></li>
+<li class="chapter" data-level="3.3.3" data-path="logistic-regression.html"><a href="logistic-regression.html#odds-ratio-2"><i class="fa fa-check"></i><b>3.3.3</b> Odds Ratio</a></li>
+<li class="chapter" data-level="3.3.4" data-path="logistic-regression.html"><a href="logistic-regression.html#multikolineratitas-2"><i class="fa fa-check"></i><b>3.3.4</b> Multikolineratitas</a></li>
+<li class="chapter" data-level="3.3.5" data-path="logistic-regression.html"><a href="logistic-regression.html#akurasi-2"><i class="fa fa-check"></i><b>3.3.5</b> Akurasi</a></li>
+<li class="chapter" data-level="3.3.6" data-path="logistic-regression.html"><a href="logistic-regression.html#kebaikan-model-2"><i class="fa fa-check"></i><b>3.3.6</b> Kebaikan Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html"><i class="fa fa-check"></i><b>4</b> Discriminant Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#analisis-diskriminan-dua-grup"><i class="fa fa-check"></i><b>4.1</b> Analisis Diskriminan Dua Grup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#data-3"><i class="fa fa-check"></i><b>4.1.1</b> Data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#pemodelan-linier"><i class="fa fa-check"></i><b>4.1.2</b> Pemodelan Linier</a></li>
+<li class="chapter" data-level="4.1.3" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#uji-signifikansi-fungsi-diskriminan"><i class="fa fa-check"></i><b>4.1.3</b> Uji Signifikansi Fungsi Diskriminan</a></li>
+<li class="chapter" data-level="4.1.4" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#akurasi-3"><i class="fa fa-check"></i><b>4.1.4</b> Akurasi</a></li>
+<li class="chapter" data-level="4.1.5" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#pemodelan-quadratik"><i class="fa fa-check"></i><b>4.1.5</b> Pemodelan Quadratik</a></li>
+<li class="chapter" data-level="4.1.6" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#tipe-diskriminan-lainnya"><i class="fa fa-check"></i><b>4.1.6</b> Tipe Diskriminan Lainnya</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#analisis-diskriminan-tiga-grup"><i class="fa fa-check"></i><b>4.2</b> Analisis Diskriminan Tiga Grup</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#data-4"><i class="fa fa-check"></i><b>4.2.1</b> Data</a></li>
+<li class="chapter" data-level="4.2.2" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#uji-signifikansi-fungsi-diskriminan-1"><i class="fa fa-check"></i><b>4.2.2</b> Uji Signifikansi Fungsi Diskriminan</a></li>
+<li class="chapter" data-level="4.2.3" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#akurasi-4"><i class="fa fa-check"></i><b>4.2.3</b> Akurasi</a></li>
+<li class="chapter" data-level="4.2.4" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#visualisasi"><i class="fa fa-check"></i><b>4.2.4</b> Visualisasi</a></li>
+<li class="chapter" data-level="4.2.5" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#pemodelan-quadratik-1"><i class="fa fa-check"></i><b>4.2.5</b> Pemodelan Quadratik</a></li>
+<li class="chapter" data-level="4.2.6" data-path="discriminant-analysis.html"><a href="discriminant-analysis.html#tipe-diskriminan-lainnya-1"><i class="fa fa-check"></i><b>4.2.6</b> Tipe Diskriminan Lainnya</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Cluster Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="cluster-analysis.html"><a href="cluster-analysis.html#metode-berhirarki"><i class="fa fa-check"></i><b>5.1</b> Metode berhirarki</a></li>
+<li class="chapter" data-level="5.2" data-path="cluster-analysis.html"><a href="cluster-analysis.html#metode-tidak-berhirarki---kmeans"><i class="fa fa-check"></i><b>5.2</b> Metode tidak berhirarki - kmeans</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pca-analysis-and-biplot.html"><a href="pca-analysis-and-biplot.html"><i class="fa fa-check"></i><b>6</b> PCA Analysis and Biplot</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="pca-analysis-and-biplot.html"><a href="pca-analysis-and-biplot.html#pca"><i class="fa fa-check"></i><b>6.1</b> PCA</a></li>
+<li class="chapter" data-level="6.2" data-path="pca-analysis-and-biplot.html"><a href="pca-analysis-and-biplot.html#biplot"><i class="fa fa-check"></i><b>6.2</b> Biplot</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="factor-analysis-and-structural-equation-modeling-sem.html"><a href="factor-analysis-and-structural-equation-modeling-sem.html"><i class="fa fa-check"></i><b>7</b> Factor Analysis and Structural Equation Modeling (SEM)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="factor-analysis-and-structural-equation-modeling-sem.html"><a href="factor-analysis-and-structural-equation-modeling-sem.html#analisis-faktor"><i class="fa fa-check"></i><b>7.1</b> Analisis Faktor</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="factor-analysis-and-structural-equation-modeling-sem.html"><a href="factor-analysis-and-structural-equation-modeling-sem.html#efa"><i class="fa fa-check"></i><b>7.1.1</b> EFA</a></li>
+<li class="chapter" data-level="7.1.2" data-path="factor-analysis-and-structural-equation-modeling-sem.html"><a href="factor-analysis-and-structural-equation-modeling-sem.html#cfa"><i class="fa fa-check"></i><b>7.1.2</b> CFA</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="factor-analysis-and-structural-equation-modeling-sem.html"><a href="factor-analysis-and-structural-equation-modeling-sem.html#model-persamaan-struktural-sem"><i class="fa fa-check"></i><b>7.2</b> Model Persamaan Struktural (SEM)</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="factor-analysis-and-structural-equation-modeling-sem.html"><a href="factor-analysis-and-structural-equation-modeling-sem.html#visualisasi-sem"><i class="fa fa-check"></i><b>7.2.1</b> Visualisasi SEM</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="factor-analysis-and-structural-equation-modeling-sem.html"><a href="factor-analysis-and-structural-equation-modeling-sem.html#pls-sem"><i class="fa fa-check"></i><b>7.3</b> PLS SEM</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="analytic-hierarchy-process-ahp.html"><a href="analytic-hierarchy-process-ahp.html"><i class="fa fa-check"></i><b>8</b> Analytic Hierarchy Process (AHP)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="analytic-hierarchy-process-ahp.html"><a href="analytic-hierarchy-process-ahp.html#prosedur-pengolahan-ahp"><i class="fa fa-check"></i><b>8.1</b> Prosedur Pengolahan AHP</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="analytic-hierarchy-process-ahp.html"><a href="analytic-hierarchy-process-ahp.html#data-5"><i class="fa fa-check"></i><b>8.1.1</b> Data</a></li>
+<li class="chapter" data-level="8.1.2" data-path="analytic-hierarchy-process-ahp.html"><a href="analytic-hierarchy-process-ahp.html#analisis"><i class="fa fa-check"></i><b>8.1.2</b> Analisis</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
     </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome</a></li>
-<li><a class="" href="basics-of-r.html"><span class="header-section-number">1</span> Basics of R</a></li>
-<li><a class="" href="nonparametric-statistics.html"><span class="header-section-number">2</span> Nonparametric Statistics</a></li>
-<li><a class="" href="logistic-regression.html"><span class="header-section-number">3</span> Logistic Regression</a></li>
-<li><a class="" href="discriminant-analysis.html"><span class="header-section-number">4</span> Discriminant Analysis</a></li>
-<li><a class="active" href="cluster-analysis.html"><span class="header-section-number">5</span> Cluster Analysis</a></li>
-<li><a class="" href="pca-analysis-and-biplot.html"><span class="header-section-number">6</span> PCA Analysis and Biplot</a></li>
-<li><a class="" href="factor-analysis-and-structural-equation-modeling-sem.html"><span class="header-section-number">7</span> Factor Analysis and Structural Equation Modeling (SEM)</a></li>
-<li><a class="" href="analytic-hierarchy-process-ahp.html"><span class="header-section-number">8</span> Analytic Hierarchy Process (AHP)</a></li>
-</ul>
-
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/dekayzds/ds-multivariate">View book source <i class="fab fa-github"></i></a></p>
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Quantitative Methods with RStudio: Application for Management and Business Research</a>
+          </h1>
         </div>
-      </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="cluster-analysis" class="section level1" number="5">
-<h1>
-<span class="header-section-number">5</span> Cluster Analysis<a class="anchor" aria-label="anchor" href="#cluster-analysis"><i class="fas fa-link"></i></a>
-</h1>
-<div id="metode-berhirarki" class="section level2" number="5.1">
-<h2>
-<span class="header-section-number">5.1</span> Metode berhirarki<a class="anchor" aria-label="anchor" href="#metode-berhirarki"><i class="fas fa-link"></i></a>
-</h2>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cluster-analysis" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Cluster Analysis<a href="cluster-analysis.html#cluster-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="metode-berhirarki" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Metode berhirarki<a href="cluster-analysis.html#metode-berhirarki" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Ref:
 <a href="https://rpubs.com/odenipinedo/cluster-analysis-in-R" class="uri">https://rpubs.com/odenipinedo/cluster-analysis-in-R</a></p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'readxl' was built under R version 4.2.3</span></span>
-<span><span class="va">Provinsi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/provinsi.xlsx"</span><span class="op">)</span></span>
-<span><span class="va">Prov.scaled</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">Provinsi</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span> <span class="op">=</span> <span class="va">Provinsi</span><span class="op">$</span><span class="va">Provinsi</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                IPM         UHH        RLS         PPK</span></span>
-<span><span class="co">#&gt; Aceh    0.20822137  0.04044611  0.7444782 -0.62264434</span></span>
-<span><span class="co">#&gt; Sumut   0.20085709 -0.39282591  1.0245728 -0.11277090</span></span>
-<span><span class="co">#&gt; Sumbar  0.36532598 -0.23835502  0.4747574  0.01481560</span></span>
-<span><span class="co">#&gt; Riau    0.50033775  0.59428078  0.5162529  0.19012890</span></span>
-<span><span class="co">#&gt; Jambi   0.05848104  0.50762638 -0.1165536 -0.18648754</span></span>
-<span><span class="co">#&gt; Sumsel -0.21890679 -0.08765171 -0.2825356 -0.02582306</span></span>
-<span><span class="co">#&gt;              Gini</span></span>
-<span><span class="co">#&gt; Aceh   -0.8089350</span></span>
-<span><span class="co">#&gt; Sumut  -0.6516207</span></span>
-<span><span class="co">#&gt; Sumbar -1.2546590</span></span>
-<span><span class="co">#&gt; Riau   -0.9138112</span></span>
-<span><span class="co">#&gt; Jambi  -0.6778397</span></span>
-<span><span class="co">#&gt; Sumsel  0.1349510</span></span></code></pre></div>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## membuat dissimilarity matrix</span></span>
-<span><span class="va">dprov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, method<span class="op">=</span><span class="st">"euclidean"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">c.comp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"complete"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.comp</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.7853523</span></span></code></pre></div>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">c.sing</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"single"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.sing</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.7905858</span></span></code></pre></div>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">c.avrg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.avrg</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8092689</span></span></code></pre></div>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">c.ward</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"ward.D"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.ward</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.5336018</span></span></code></pre></div>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">c.ctrd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"centroid"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.ctrd</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.7700878</span></span></code></pre></div>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.sthda.com/english/rpkgs/factoextra">factoextra</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: ggplot2</span></span>
-<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.2.3</span></span>
-<span><span class="co">#&gt; Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_dend.html">fviz_dend</a></span><span class="op">(</span><span class="va">c.avrg</span>, cex <span class="op">=</span> <span class="fl">0.5</span>, </span>
-<span>          main <span class="op">=</span> <span class="st">"Cluster Dendrogram average linkage"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use</span></span>
-<span><span class="co">#&gt; "none" instead as of ggplot2 3.3.4.</span></span>
-<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the factoextra</span></span>
-<span><span class="co">#&gt;   package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at</span></span>
-<span><span class="co">#&gt;   &lt;https://github.com/kassambara/factoextra/issues&gt;.</span></span>
-<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
-<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
-<span><span class="co">#&gt; this warning was generated.</span></span></code></pre></div>
-<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">avg_coph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.avrg</span><span class="op">)</span></span>
-<span><span class="va">avg_clust</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">avg_clust</span><span class="op">)</span></span>
-<span><span class="co">#&gt; avg_clust</span></span>
-<span><span class="co">#&gt;  1  2  3  4 </span></span>
-<span><span class="co">#&gt; 26  1  1  6</span></span></code></pre></div>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_dend.html">fviz_dend</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">4</span>, </span>
-<span>          k_colors <span class="op">=</span> <span class="st">"jco"</span>, </span>
-<span>          rect <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>          main <span class="op">=</span> <span class="st">"Average Linkage Cluster"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">clValid</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'clValid' was built under R version 4.2.3</span></span>
-<span><span class="co">#&gt; Loading required package: cluster</span></span>
-<span><span class="co">#&gt; Warning: package 'cluster' was built under R version 4.2.3</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://svn.r-project.org/R-packages/trunk/cluster/">cluster</a></span><span class="op">)</span></span>
-<span><span class="co"># internal measures</span></span>
-<span><span class="va">internal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/clValid/man/clValid.html">clValid</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, nClust <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">6</span>, </span>
-<span>                    clMethods <span class="op">=</span> <span class="st">"hierarchical"</span>, </span>
-<span>                    validation <span class="op">=</span> <span class="st">"internal"</span>, </span>
-<span>                    metric <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
-<span>                    method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">internal</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Clustering Methods:</span></span>
-<span><span class="co">#&gt;  hierarchical </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Cluster sizes:</span></span>
-<span><span class="co">#&gt;  2 3 4 5 6 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Validation Measures:</span></span>
-<span><span class="co">#&gt;                                  2       3       4       5       6</span></span>
-<span><span class="co">#&gt;                                                                   </span></span>
-<span><span class="co">#&gt; hierarchical Connectivity   4.5246 10.3012 11.6345 18.3198 24.1508</span></span>
-<span><span class="co">#&gt;              Dunn           0.3637  0.3703  0.3703  0.3224  0.3592</span></span>
-<span><span class="co">#&gt;              Silhouette     0.4915  0.3484  0.3092  0.2567  0.3117</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Optimal Scores:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;              Score  Method       Clusters</span></span>
-<span><span class="co">#&gt; Connectivity 4.5246 hierarchical 2       </span></span>
-<span><span class="co">#&gt; Dunn         0.3703 hierarchical 3       </span></span>
-<span><span class="co">#&gt; Silhouette   0.4915 hierarchical 2</span></span></code></pre></div>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_dend.html">fviz_dend</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>          k_colors <span class="op">=</span> <span class="st">"jco"</span>, </span>
-<span>          rect <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>          main <span class="op">=</span> <span class="st">"Average Linkage Cluster"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">group</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">group</span></span>
-<span><span class="co">#&gt;      Aceh     Sumut    Sumbar      Riau     Jambi    Sumsel </span></span>
-<span><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
-<span><span class="co">#&gt;  Bengkulu   Lampung     Babel     Kepri       DKI     Jabar </span></span>
-<span><span class="co">#&gt;         1         1         1         1         2         1 </span></span>
-<span><span class="co">#&gt;    Jateng       DIY     Jatim    Banten      Bali       NTB </span></span>
-<span><span class="co">#&gt;         1         2         1         1         1         1 </span></span>
-<span><span class="co">#&gt;       NTT    Kalbar   Kalteng    Kalsel    Kaltim   Kaltara </span></span>
-<span><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
-<span><span class="co">#&gt;     Sulut   Sulteng    Sulsel    Sultra Gorontalo    Sulbar </span></span>
-<span><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
-<span><span class="co">#&gt;    Maluku     Malut     Pabar     Papua </span></span>
-<span><span class="co">#&gt;         1         1         1         1</span></span></code></pre></div>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_cluster.html">fviz_cluster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Prov.scaled</span>, </span>
-<span>                  cluster <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-14-1.png" width="672"></div>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Standard deviations (1, .., p=5):</span></span>
-<span><span class="co">#&gt; [1] 1.7653705 1.0227284 0.7270850 0.5299864 0.1671984</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Rotation (n x k) = (5 x 5):</span></span>
-<span><span class="co">#&gt;             PC1         PC2          PC3           PC4</span></span>
-<span><span class="co">#&gt; IPM  -0.5601680 -0.05311199 -0.005227509 -0.0006949187</span></span>
-<span><span class="co">#&gt; UHH  -0.4513030  0.05646383 -0.811065327  0.2024129889</span></span>
-<span><span class="co">#&gt; RLS  -0.4591728 -0.33781331  0.497619343  0.5648220282</span></span>
-<span><span class="co">#&gt; PPK  -0.5069166  0.09086739  0.227624805 -0.7546468667</span></span>
-<span><span class="co">#&gt; Gini -0.1213811  0.93360390  0.206658283  0.2655422416</span></span>
-<span><span class="co">#&gt;              PC5</span></span>
-<span><span class="co">#&gt; IPM  -0.82665781</span></span>
-<span><span class="co">#&gt; UHH   0.30714735</span></span>
-<span><span class="co">#&gt; RLS   0.32923179</span></span>
-<span><span class="co">#&gt; PPK   0.33685862</span></span>
-<span><span class="co">#&gt; Gini  0.02073819</span></span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="cluster-analysis.html#cb140-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb140-2"><a href="cluster-analysis.html#cb140-2" tabindex="-1"></a>Provinsi <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/provinsi.xlsx&quot;</span>)</span>
+<span id="cb140-3"><a href="cluster-analysis.html#cb140-3" tabindex="-1"></a>Prov.scaled <span class="ot">=</span> <span class="fu">scale</span>(Provinsi[,<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>)])</span>
+<span id="cb140-4"><a href="cluster-analysis.html#cb140-4" tabindex="-1"></a><span class="fu">rownames</span>(Prov.scaled) <span class="ot">=</span> Provinsi<span class="sc">$</span>Provinsi</span>
+<span id="cb140-5"><a href="cluster-analysis.html#cb140-5" tabindex="-1"></a><span class="fu">head</span>(Prov.scaled)</span>
+<span id="cb140-6"><a href="cluster-analysis.html#cb140-6" tabindex="-1"></a><span class="co">#&gt;                IPM         UHH        RLS         PPK</span></span>
+<span id="cb140-7"><a href="cluster-analysis.html#cb140-7" tabindex="-1"></a><span class="co">#&gt; Aceh    0.20822137  0.04044611  0.7444782 -0.62264434</span></span>
+<span id="cb140-8"><a href="cluster-analysis.html#cb140-8" tabindex="-1"></a><span class="co">#&gt; Sumut   0.20085709 -0.39282591  1.0245728 -0.11277090</span></span>
+<span id="cb140-9"><a href="cluster-analysis.html#cb140-9" tabindex="-1"></a><span class="co">#&gt; Sumbar  0.36532598 -0.23835502  0.4747574  0.01481560</span></span>
+<span id="cb140-10"><a href="cluster-analysis.html#cb140-10" tabindex="-1"></a><span class="co">#&gt; Riau    0.50033775  0.59428078  0.5162529  0.19012890</span></span>
+<span id="cb140-11"><a href="cluster-analysis.html#cb140-11" tabindex="-1"></a><span class="co">#&gt; Jambi   0.05848104  0.50762638 -0.1165536 -0.18648754</span></span>
+<span id="cb140-12"><a href="cluster-analysis.html#cb140-12" tabindex="-1"></a><span class="co">#&gt; Sumsel -0.21890679 -0.08765171 -0.2825356 -0.02582306</span></span>
+<span id="cb140-13"><a href="cluster-analysis.html#cb140-13" tabindex="-1"></a><span class="co">#&gt;              Gini</span></span>
+<span id="cb140-14"><a href="cluster-analysis.html#cb140-14" tabindex="-1"></a><span class="co">#&gt; Aceh   -0.8089350</span></span>
+<span id="cb140-15"><a href="cluster-analysis.html#cb140-15" tabindex="-1"></a><span class="co">#&gt; Sumut  -0.6516207</span></span>
+<span id="cb140-16"><a href="cluster-analysis.html#cb140-16" tabindex="-1"></a><span class="co">#&gt; Sumbar -1.2546590</span></span>
+<span id="cb140-17"><a href="cluster-analysis.html#cb140-17" tabindex="-1"></a><span class="co">#&gt; Riau   -0.9138112</span></span>
+<span id="cb140-18"><a href="cluster-analysis.html#cb140-18" tabindex="-1"></a><span class="co">#&gt; Jambi  -0.6778397</span></span>
+<span id="cb140-19"><a href="cluster-analysis.html#cb140-19" tabindex="-1"></a><span class="co">#&gt; Sumsel  0.1349510</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="cluster-analysis.html#cb141-1" tabindex="-1"></a><span class="do">## membuat dissimilarity matrix</span></span>
+<span id="cb141-2"><a href="cluster-analysis.html#cb141-2" tabindex="-1"></a>dprov <span class="ot">=</span> <span class="fu">dist</span>(Prov.scaled, <span class="at">method=</span><span class="st">&quot;euclidean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="cluster-analysis.html#cb142-1" tabindex="-1"></a>c.comp <span class="ot">=</span> <span class="fu">hclust</span>(dprov, <span class="at">method =</span> <span class="st">&quot;complete&quot;</span>)</span>
+<span id="cb142-2"><a href="cluster-analysis.html#cb142-2" tabindex="-1"></a><span class="fu">cor</span>(dprov , <span class="fu">cophenetic</span>(c.comp))</span>
+<span id="cb142-3"><a href="cluster-analysis.html#cb142-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.7853523</span></span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="cluster-analysis.html#cb143-1" tabindex="-1"></a>c.sing <span class="ot">=</span> <span class="fu">hclust</span>(dprov, <span class="at">method =</span> <span class="st">&quot;single&quot;</span>)</span>
+<span id="cb143-2"><a href="cluster-analysis.html#cb143-2" tabindex="-1"></a><span class="fu">cor</span>(dprov , <span class="fu">cophenetic</span>(c.sing))</span>
+<span id="cb143-3"><a href="cluster-analysis.html#cb143-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.7905858</span></span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="cluster-analysis.html#cb144-1" tabindex="-1"></a>c.avrg <span class="ot">=</span> <span class="fu">hclust</span>(dprov, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb144-2"><a href="cluster-analysis.html#cb144-2" tabindex="-1"></a><span class="fu">cor</span>(dprov , <span class="fu">cophenetic</span>(c.avrg))</span>
+<span id="cb144-3"><a href="cluster-analysis.html#cb144-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.8092689</span></span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="cluster-analysis.html#cb145-1" tabindex="-1"></a>c.ward <span class="ot">=</span> <span class="fu">hclust</span>(dprov, <span class="at">method =</span> <span class="st">&quot;ward.D&quot;</span>)</span>
+<span id="cb145-2"><a href="cluster-analysis.html#cb145-2" tabindex="-1"></a><span class="fu">cor</span>(dprov , <span class="fu">cophenetic</span>(c.ward))</span>
+<span id="cb145-3"><a href="cluster-analysis.html#cb145-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.5336018</span></span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="cluster-analysis.html#cb146-1" tabindex="-1"></a>c.ctrd <span class="ot">=</span> <span class="fu">hclust</span>(dprov, <span class="at">method =</span> <span class="st">&quot;centroid&quot;</span>)</span>
+<span id="cb146-2"><a href="cluster-analysis.html#cb146-2" tabindex="-1"></a><span class="fu">cor</span>(dprov , <span class="fu">cophenetic</span>(c.ctrd))</span>
+<span id="cb146-3"><a href="cluster-analysis.html#cb146-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.7700878</span></span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="cluster-analysis.html#cb147-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb147-2"><a href="cluster-analysis.html#cb147-2" tabindex="-1"></a><span class="co">#&gt; Loading required package: ggplot2</span></span>
+<span id="cb147-3"><a href="cluster-analysis.html#cb147-3" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;ggplot2&#39; was built under R version 4.4.3</span></span>
+<span id="cb147-4"><a href="cluster-analysis.html#cb147-4" tabindex="-1"></a><span class="co">#&gt; Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</span></span>
+<span id="cb147-5"><a href="cluster-analysis.html#cb147-5" tabindex="-1"></a><span class="fu">fviz_dend</span>(c.avrg, <span class="at">cex =</span> <span class="fl">0.5</span>, </span>
+<span id="cb147-6"><a href="cluster-analysis.html#cb147-6" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;Cluster Dendrogram average linkage&quot;</span>)</span>
+<span id="cb147-7"><a href="cluster-analysis.html#cb147-7" tabindex="-1"></a><span class="co">#&gt; Warning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use</span></span>
+<span id="cb147-8"><a href="cluster-analysis.html#cb147-8" tabindex="-1"></a><span class="co">#&gt; &quot;none&quot; instead as of ggplot2 3.3.4.</span></span>
+<span id="cb147-9"><a href="cluster-analysis.html#cb147-9" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the factoextra</span></span>
+<span id="cb147-10"><a href="cluster-analysis.html#cb147-10" tabindex="-1"></a><span class="co">#&gt;   package.</span></span>
+<span id="cb147-11"><a href="cluster-analysis.html#cb147-11" tabindex="-1"></a><span class="co">#&gt;   Please report the issue at</span></span>
+<span id="cb147-12"><a href="cluster-analysis.html#cb147-12" tabindex="-1"></a><span class="co">#&gt;   &lt;https://github.com/kassambara/factoextra/issues&gt;.</span></span>
+<span id="cb147-13"><a href="cluster-analysis.html#cb147-13" tabindex="-1"></a><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span id="cb147-14"><a href="cluster-analysis.html#cb147-14" tabindex="-1"></a><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
+<span id="cb147-15"><a href="cluster-analysis.html#cb147-15" tabindex="-1"></a><span class="co">#&gt; this warning was generated.</span></span></code></pre></div>
+<p><img src="05-Bab5_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="cluster-analysis.html#cb148-1" tabindex="-1"></a>avg_coph <span class="ot">&lt;-</span> <span class="fu">cophenetic</span>(c.avrg)</span>
+<span id="cb148-2"><a href="cluster-analysis.html#cb148-2" tabindex="-1"></a>avg_clust <span class="ot">&lt;-</span> <span class="fu">cutree</span>(c.avrg, <span class="at">k =</span> <span class="dv">4</span>)</span>
+<span id="cb148-3"><a href="cluster-analysis.html#cb148-3" tabindex="-1"></a><span class="fu">table</span>(avg_clust)</span>
+<span id="cb148-4"><a href="cluster-analysis.html#cb148-4" tabindex="-1"></a><span class="co">#&gt; avg_clust</span></span>
+<span id="cb148-5"><a href="cluster-analysis.html#cb148-5" tabindex="-1"></a><span class="co">#&gt;  1  2  3  4 </span></span>
+<span id="cb148-6"><a href="cluster-analysis.html#cb148-6" tabindex="-1"></a><span class="co">#&gt; 26  1  1  6</span></span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="cluster-analysis.html#cb149-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(c.avrg, <span class="at">k =</span> <span class="dv">4</span>, </span>
+<span id="cb149-2"><a href="cluster-analysis.html#cb149-2" tabindex="-1"></a>          <span class="at">k_colors =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb149-3"><a href="cluster-analysis.html#cb149-3" tabindex="-1"></a>          <span class="at">rect =</span> T, </span>
+<span id="cb149-4"><a href="cluster-analysis.html#cb149-4" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;Average Linkage Cluster&quot;</span>)</span></code></pre></div>
+<p><img src="05-Bab5_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="cluster-analysis.html#cb150-1" tabindex="-1"></a><span class="fu">library</span>(clValid)</span>
+<span id="cb150-2"><a href="cluster-analysis.html#cb150-2" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;clValid&#39; was built under R version 4.4.3</span></span>
+<span id="cb150-3"><a href="cluster-analysis.html#cb150-3" tabindex="-1"></a><span class="co">#&gt; Loading required package: cluster</span></span>
+<span id="cb150-4"><a href="cluster-analysis.html#cb150-4" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb150-5"><a href="cluster-analysis.html#cb150-5" tabindex="-1"></a><span class="co"># internal measures</span></span>
+<span id="cb150-6"><a href="cluster-analysis.html#cb150-6" tabindex="-1"></a>internal <span class="ot">&lt;-</span> <span class="fu">clValid</span>(Prov.scaled, <span class="at">nClust =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, </span>
+<span id="cb150-7"><a href="cluster-analysis.html#cb150-7" tabindex="-1"></a>                    <span class="at">clMethods =</span> <span class="st">&quot;hierarchical&quot;</span>, </span>
+<span id="cb150-8"><a href="cluster-analysis.html#cb150-8" tabindex="-1"></a>                    <span class="at">validation =</span> <span class="st">&quot;internal&quot;</span>, </span>
+<span id="cb150-9"><a href="cluster-analysis.html#cb150-9" tabindex="-1"></a>                    <span class="at">metric =</span> <span class="st">&quot;euclidean&quot;</span>,</span>
+<span id="cb150-10"><a href="cluster-analysis.html#cb150-10" tabindex="-1"></a>                    <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb150-11"><a href="cluster-analysis.html#cb150-11" tabindex="-1"></a><span class="fu">summary</span>(internal)</span>
+<span id="cb150-12"><a href="cluster-analysis.html#cb150-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb150-13"><a href="cluster-analysis.html#cb150-13" tabindex="-1"></a><span class="co">#&gt; Clustering Methods:</span></span>
+<span id="cb150-14"><a href="cluster-analysis.html#cb150-14" tabindex="-1"></a><span class="co">#&gt;  hierarchical </span></span>
+<span id="cb150-15"><a href="cluster-analysis.html#cb150-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb150-16"><a href="cluster-analysis.html#cb150-16" tabindex="-1"></a><span class="co">#&gt; Cluster sizes:</span></span>
+<span id="cb150-17"><a href="cluster-analysis.html#cb150-17" tabindex="-1"></a><span class="co">#&gt;  2 3 4 5 6 </span></span>
+<span id="cb150-18"><a href="cluster-analysis.html#cb150-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb150-19"><a href="cluster-analysis.html#cb150-19" tabindex="-1"></a><span class="co">#&gt; Validation Measures:</span></span>
+<span id="cb150-20"><a href="cluster-analysis.html#cb150-20" tabindex="-1"></a><span class="co">#&gt;                                  2       3       4       5       6</span></span>
+<span id="cb150-21"><a href="cluster-analysis.html#cb150-21" tabindex="-1"></a><span class="co">#&gt;                                                                   </span></span>
+<span id="cb150-22"><a href="cluster-analysis.html#cb150-22" tabindex="-1"></a><span class="co">#&gt; hierarchical Connectivity   4.5246 10.3012 11.6345 18.3198 24.1508</span></span>
+<span id="cb150-23"><a href="cluster-analysis.html#cb150-23" tabindex="-1"></a><span class="co">#&gt;              Dunn           0.3637  0.3703  0.3703  0.3224  0.3592</span></span>
+<span id="cb150-24"><a href="cluster-analysis.html#cb150-24" tabindex="-1"></a><span class="co">#&gt;              Silhouette     0.4915  0.3484  0.3092  0.2567  0.3117</span></span>
+<span id="cb150-25"><a href="cluster-analysis.html#cb150-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb150-26"><a href="cluster-analysis.html#cb150-26" tabindex="-1"></a><span class="co">#&gt; Optimal Scores:</span></span>
+<span id="cb150-27"><a href="cluster-analysis.html#cb150-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb150-28"><a href="cluster-analysis.html#cb150-28" tabindex="-1"></a><span class="co">#&gt;              Score  Method       Clusters</span></span>
+<span id="cb150-29"><a href="cluster-analysis.html#cb150-29" tabindex="-1"></a><span class="co">#&gt; Connectivity 4.5246 hierarchical 2       </span></span>
+<span id="cb150-30"><a href="cluster-analysis.html#cb150-30" tabindex="-1"></a><span class="co">#&gt; Dunn         0.3703 hierarchical 3       </span></span>
+<span id="cb150-31"><a href="cluster-analysis.html#cb150-31" tabindex="-1"></a><span class="co">#&gt; Silhouette   0.4915 hierarchical 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="cluster-analysis.html#cb151-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(c.avrg, <span class="at">k =</span> <span class="dv">2</span>, </span>
+<span id="cb151-2"><a href="cluster-analysis.html#cb151-2" tabindex="-1"></a>          <span class="at">k_colors =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb151-3"><a href="cluster-analysis.html#cb151-3" tabindex="-1"></a>          <span class="at">rect =</span> T, </span>
+<span id="cb151-4"><a href="cluster-analysis.html#cb151-4" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;Average Linkage Cluster&quot;</span>)</span></code></pre></div>
+<p><img src="05-Bab5_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="cluster-analysis.html#cb152-1" tabindex="-1"></a>group <span class="ot">=</span> <span class="fu">cutree</span>(c.avrg, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb152-2"><a href="cluster-analysis.html#cb152-2" tabindex="-1"></a>group</span>
+<span id="cb152-3"><a href="cluster-analysis.html#cb152-3" tabindex="-1"></a><span class="co">#&gt;      Aceh     Sumut    Sumbar      Riau     Jambi    Sumsel </span></span>
+<span id="cb152-4"><a href="cluster-analysis.html#cb152-4" tabindex="-1"></a><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
+<span id="cb152-5"><a href="cluster-analysis.html#cb152-5" tabindex="-1"></a><span class="co">#&gt;  Bengkulu   Lampung     Babel     Kepri       DKI     Jabar </span></span>
+<span id="cb152-6"><a href="cluster-analysis.html#cb152-6" tabindex="-1"></a><span class="co">#&gt;         1         1         1         1         2         1 </span></span>
+<span id="cb152-7"><a href="cluster-analysis.html#cb152-7" tabindex="-1"></a><span class="co">#&gt;    Jateng       DIY     Jatim    Banten      Bali       NTB </span></span>
+<span id="cb152-8"><a href="cluster-analysis.html#cb152-8" tabindex="-1"></a><span class="co">#&gt;         1         2         1         1         1         1 </span></span>
+<span id="cb152-9"><a href="cluster-analysis.html#cb152-9" tabindex="-1"></a><span class="co">#&gt;       NTT    Kalbar   Kalteng    Kalsel    Kaltim   Kaltara </span></span>
+<span id="cb152-10"><a href="cluster-analysis.html#cb152-10" tabindex="-1"></a><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
+<span id="cb152-11"><a href="cluster-analysis.html#cb152-11" tabindex="-1"></a><span class="co">#&gt;     Sulut   Sulteng    Sulsel    Sultra Gorontalo    Sulbar </span></span>
+<span id="cb152-12"><a href="cluster-analysis.html#cb152-12" tabindex="-1"></a><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
+<span id="cb152-13"><a href="cluster-analysis.html#cb152-13" tabindex="-1"></a><span class="co">#&gt;    Maluku     Malut     Pabar     Papua </span></span>
+<span id="cb152-14"><a href="cluster-analysis.html#cb152-14" tabindex="-1"></a><span class="co">#&gt;         1         1         1         1</span></span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="cluster-analysis.html#cb153-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">data =</span> Prov.scaled, </span>
+<span id="cb153-2"><a href="cluster-analysis.html#cb153-2" tabindex="-1"></a>                  <span class="at">cluster =</span> group)) <span class="sc">+</span> </span>
+<span id="cb153-3"><a href="cluster-analysis.html#cb153-3" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="05-Bab5_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="cluster-analysis.html#cb154-1" tabindex="-1"></a><span class="fu">prcomp</span>(Prov.scaled)</span>
+<span id="cb154-2"><a href="cluster-analysis.html#cb154-2" tabindex="-1"></a><span class="co">#&gt; Standard deviations (1, .., p=5):</span></span>
+<span id="cb154-3"><a href="cluster-analysis.html#cb154-3" tabindex="-1"></a><span class="co">#&gt; [1] 1.7653705 1.0227284 0.7270850 0.5299864 0.1671984</span></span>
+<span id="cb154-4"><a href="cluster-analysis.html#cb154-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb154-5"><a href="cluster-analysis.html#cb154-5" tabindex="-1"></a><span class="co">#&gt; Rotation (n x k) = (5 x 5):</span></span>
+<span id="cb154-6"><a href="cluster-analysis.html#cb154-6" tabindex="-1"></a><span class="co">#&gt;             PC1         PC2          PC3           PC4</span></span>
+<span id="cb154-7"><a href="cluster-analysis.html#cb154-7" tabindex="-1"></a><span class="co">#&gt; IPM  -0.5601680 -0.05311199 -0.005227509 -0.0006949187</span></span>
+<span id="cb154-8"><a href="cluster-analysis.html#cb154-8" tabindex="-1"></a><span class="co">#&gt; UHH  -0.4513030  0.05646383 -0.811065327  0.2024129889</span></span>
+<span id="cb154-9"><a href="cluster-analysis.html#cb154-9" tabindex="-1"></a><span class="co">#&gt; RLS  -0.4591728 -0.33781331  0.497619343  0.5648220282</span></span>
+<span id="cb154-10"><a href="cluster-analysis.html#cb154-10" tabindex="-1"></a><span class="co">#&gt; PPK  -0.5069166  0.09086739  0.227624805 -0.7546468667</span></span>
+<span id="cb154-11"><a href="cluster-analysis.html#cb154-11" tabindex="-1"></a><span class="co">#&gt; Gini -0.1213811  0.93360390  0.206658283  0.2655422416</span></span>
+<span id="cb154-12"><a href="cluster-analysis.html#cb154-12" tabindex="-1"></a><span class="co">#&gt;              PC5</span></span>
+<span id="cb154-13"><a href="cluster-analysis.html#cb154-13" tabindex="-1"></a><span class="co">#&gt; IPM  -0.82665781</span></span>
+<span id="cb154-14"><a href="cluster-analysis.html#cb154-14" tabindex="-1"></a><span class="co">#&gt; UHH   0.30714735</span></span>
+<span id="cb154-15"><a href="cluster-analysis.html#cb154-15" tabindex="-1"></a><span class="co">#&gt; RLS   0.32923179</span></span>
+<span id="cb154-16"><a href="cluster-analysis.html#cb154-16" tabindex="-1"></a><span class="co">#&gt; PPK   0.33685862</span></span>
+<span id="cb154-17"><a href="cluster-analysis.html#cb154-17" tabindex="-1"></a><span class="co">#&gt; Gini  0.02073819</span></span></code></pre></div>
 </div>
-<div id="metode-tidak-berhirarki---kmeans" class="section level2" number="5.2">
-<h2>
-<span class="header-section-number">5.2</span> Metode tidak berhirarki - kmeans<a class="anchor" aria-label="anchor" href="#metode-tidak-berhirarki---kmeans"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_nbclust.html">fviz_nbclust</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, <span class="va">kmeans</span>, method <span class="op">=</span> <span class="st">"wss"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-16-1.png" width="672"></div>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_nbclust.html">fviz_nbclust</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, <span class="va">kmeans</span>, method <span class="op">=</span> <span class="st">"silhouette"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-17-1.png" width="672"></div>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">km</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, centers<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">km</span></span>
-<span><span class="co">#&gt; K-means clustering with 4 clusters of sizes 5, 7, 16, 6</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Cluster means:</span></span>
-<span><span class="co">#&gt;           IPM        UHH        RLS         PPK       Gini</span></span>
-<span><span class="co">#&gt; 1  1.67223995  1.1202353  1.3689855  1.75840321  0.6331131</span></span>
-<span><span class="co">#&gt; 2  0.22785944  0.6620973 -0.1491572  0.09292014  0.9739608</span></span>
-<span><span class="co">#&gt; 3 -0.08819085 -0.1001318  0.1246391 -0.24567350 -0.7991029</span></span>
-<span><span class="co">#&gt; 4 -1.42419372 -1.4389581 -1.2991755 -0.91861351  0.4670591</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Clustering vector:</span></span>
-<span><span class="co">#&gt;      Aceh     Sumut    Sumbar      Riau     Jambi    Sumsel </span></span>
-<span><span class="co">#&gt;         3         3         3         3         3         3 </span></span>
-<span><span class="co">#&gt;  Bengkulu   Lampung     Babel     Kepri       DKI     Jabar </span></span>
-<span><span class="co">#&gt;         3         3         3         1         1         2 </span></span>
-<span><span class="co">#&gt;    Jateng       DIY     Jatim    Banten      Bali       NTB </span></span>
-<span><span class="co">#&gt;         2         1         2         2         1         4 </span></span>
-<span><span class="co">#&gt;       NTT    Kalbar   Kalteng    Kalsel    Kaltim   Kaltara </span></span>
-<span><span class="co">#&gt;         4         3         3         3         1         3 </span></span>
-<span><span class="co">#&gt;     Sulut   Sulteng    Sulsel    Sultra Gorontalo    Sulbar </span></span>
-<span><span class="co">#&gt;         2         3         2         2         4         4 </span></span>
-<span><span class="co">#&gt;    Maluku     Malut     Pabar     Papua </span></span>
-<span><span class="co">#&gt;         3         3         4         4 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Within cluster sum of squares by cluster:</span></span>
-<span><span class="co">#&gt; [1] 17.054859  7.933134 22.111511  7.711994</span></span>
-<span><span class="co">#&gt;  (between_SS / total_SS =  66.8 %)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Available components:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [1] "cluster"      "centers"      "totss"       </span></span>
-<span><span class="co">#&gt; [4] "withinss"     "tot.withinss" "betweenss"   </span></span>
-<span><span class="co">#&gt; [7] "size"         "iter"         "ifault"</span></span></code></pre></div>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_cluster.html">fviz_cluster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Prov.scaled</span>, cluster <span class="op">=</span> <span class="va">km</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-19-1.png" width="672"></div>
+<div id="metode-tidak-berhirarki---kmeans" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Metode tidak berhirarki - kmeans<a href="cluster-analysis.html#metode-tidak-berhirarki---kmeans" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="cluster-analysis.html#cb155-1" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(Prov.scaled, kmeans, <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>)</span></code></pre></div>
+<p><img src="05-Bab5_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="cluster-analysis.html#cb156-1" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(Prov.scaled, kmeans, <span class="at">method =</span> <span class="st">&quot;silhouette&quot;</span>)</span></code></pre></div>
+<p><img src="05-Bab5_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="cluster-analysis.html#cb157-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb157-2"><a href="cluster-analysis.html#cb157-2" tabindex="-1"></a>km <span class="ot">=</span> <span class="fu">kmeans</span>(Prov.scaled, <span class="at">centers=</span><span class="dv">4</span>)</span>
+<span id="cb157-3"><a href="cluster-analysis.html#cb157-3" tabindex="-1"></a>km</span>
+<span id="cb157-4"><a href="cluster-analysis.html#cb157-4" tabindex="-1"></a><span class="co">#&gt; K-means clustering with 4 clusters of sizes 5, 7, 16, 6</span></span>
+<span id="cb157-5"><a href="cluster-analysis.html#cb157-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb157-6"><a href="cluster-analysis.html#cb157-6" tabindex="-1"></a><span class="co">#&gt; Cluster means:</span></span>
+<span id="cb157-7"><a href="cluster-analysis.html#cb157-7" tabindex="-1"></a><span class="co">#&gt;           IPM        UHH        RLS         PPK       Gini</span></span>
+<span id="cb157-8"><a href="cluster-analysis.html#cb157-8" tabindex="-1"></a><span class="co">#&gt; 1  1.67223995  1.1202353  1.3689855  1.75840321  0.6331131</span></span>
+<span id="cb157-9"><a href="cluster-analysis.html#cb157-9" tabindex="-1"></a><span class="co">#&gt; 2  0.22785944  0.6620973 -0.1491572  0.09292014  0.9739608</span></span>
+<span id="cb157-10"><a href="cluster-analysis.html#cb157-10" tabindex="-1"></a><span class="co">#&gt; 3 -0.08819085 -0.1001318  0.1246391 -0.24567350 -0.7991029</span></span>
+<span id="cb157-11"><a href="cluster-analysis.html#cb157-11" tabindex="-1"></a><span class="co">#&gt; 4 -1.42419372 -1.4389581 -1.2991755 -0.91861351  0.4670591</span></span>
+<span id="cb157-12"><a href="cluster-analysis.html#cb157-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb157-13"><a href="cluster-analysis.html#cb157-13" tabindex="-1"></a><span class="co">#&gt; Clustering vector:</span></span>
+<span id="cb157-14"><a href="cluster-analysis.html#cb157-14" tabindex="-1"></a><span class="co">#&gt;      Aceh     Sumut    Sumbar      Riau     Jambi    Sumsel </span></span>
+<span id="cb157-15"><a href="cluster-analysis.html#cb157-15" tabindex="-1"></a><span class="co">#&gt;         3         3         3         3         3         3 </span></span>
+<span id="cb157-16"><a href="cluster-analysis.html#cb157-16" tabindex="-1"></a><span class="co">#&gt;  Bengkulu   Lampung     Babel     Kepri       DKI     Jabar </span></span>
+<span id="cb157-17"><a href="cluster-analysis.html#cb157-17" tabindex="-1"></a><span class="co">#&gt;         3         3         3         1         1         2 </span></span>
+<span id="cb157-18"><a href="cluster-analysis.html#cb157-18" tabindex="-1"></a><span class="co">#&gt;    Jateng       DIY     Jatim    Banten      Bali       NTB </span></span>
+<span id="cb157-19"><a href="cluster-analysis.html#cb157-19" tabindex="-1"></a><span class="co">#&gt;         2         1         2         2         1         4 </span></span>
+<span id="cb157-20"><a href="cluster-analysis.html#cb157-20" tabindex="-1"></a><span class="co">#&gt;       NTT    Kalbar   Kalteng    Kalsel    Kaltim   Kaltara </span></span>
+<span id="cb157-21"><a href="cluster-analysis.html#cb157-21" tabindex="-1"></a><span class="co">#&gt;         4         3         3         3         1         3 </span></span>
+<span id="cb157-22"><a href="cluster-analysis.html#cb157-22" tabindex="-1"></a><span class="co">#&gt;     Sulut   Sulteng    Sulsel    Sultra Gorontalo    Sulbar </span></span>
+<span id="cb157-23"><a href="cluster-analysis.html#cb157-23" tabindex="-1"></a><span class="co">#&gt;         2         3         2         2         4         4 </span></span>
+<span id="cb157-24"><a href="cluster-analysis.html#cb157-24" tabindex="-1"></a><span class="co">#&gt;    Maluku     Malut     Pabar     Papua </span></span>
+<span id="cb157-25"><a href="cluster-analysis.html#cb157-25" tabindex="-1"></a><span class="co">#&gt;         3         3         4         4 </span></span>
+<span id="cb157-26"><a href="cluster-analysis.html#cb157-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb157-27"><a href="cluster-analysis.html#cb157-27" tabindex="-1"></a><span class="co">#&gt; Within cluster sum of squares by cluster:</span></span>
+<span id="cb157-28"><a href="cluster-analysis.html#cb157-28" tabindex="-1"></a><span class="co">#&gt; [1] 17.054859  7.933134 22.111511  7.711994</span></span>
+<span id="cb157-29"><a href="cluster-analysis.html#cb157-29" tabindex="-1"></a><span class="co">#&gt;  (between_SS / total_SS =  66.8 %)</span></span>
+<span id="cb157-30"><a href="cluster-analysis.html#cb157-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb157-31"><a href="cluster-analysis.html#cb157-31" tabindex="-1"></a><span class="co">#&gt; Available components:</span></span>
+<span id="cb157-32"><a href="cluster-analysis.html#cb157-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb157-33"><a href="cluster-analysis.html#cb157-33" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;       </span></span>
+<span id="cb157-34"><a href="cluster-analysis.html#cb157-34" tabindex="-1"></a><span class="co">#&gt; [4] &quot;withinss&quot;     &quot;tot.withinss&quot; &quot;betweenss&quot;   </span></span>
+<span id="cb157-35"><a href="cluster-analysis.html#cb157-35" tabindex="-1"></a><span class="co">#&gt; [7] &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="cluster-analysis.html#cb158-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">data =</span> Prov.scaled, <span class="at">cluster =</span> km<span class="sc">$</span>cluster)) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="05-Bab5_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 
 </div>
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="discriminant-analysis.html"><span class="header-section-number">4</span> Discriminant Analysis</a></div>
-<div class="next"><a href="pca-analysis-and-biplot.html"><span class="header-section-number">6</span> PCA Analysis and Biplot</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#cluster-analysis"><span class="header-section-number">5</span> Cluster Analysis</a></li>
-<li><a class="nav-link" href="#metode-berhirarki"><span class="header-section-number">5.1</span> Metode berhirarki</a></li>
-<li><a class="nav-link" href="#metode-tidak-berhirarki---kmeans"><span class="header-section-number">5.2</span> Metode tidak berhirarki - kmeans</a></li>
-</ul>
+            </section>
 
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dekayzds/ds-multivariate/blob/master/05-Bab5.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dekayzds/ds-multivariate/edit/master/05-Bab5.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
-</div>
-    </nav>
-</div>
-
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Quantitative Methods with RStudio: Application for Management and Business Research</strong>" was written by Deri Siswara and Nafisa Berliana Indah Pratiwi. </p>
+          </div>
+        </div>
+      </div>
+<a href="discriminant-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pca-analysis-and-biplot.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer>
 </body>
+
 </html>
