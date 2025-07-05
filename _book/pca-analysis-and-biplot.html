@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 PCA Analysis and Biplot | Quantitative Methods with RStudio: Application for Management and Business Research</title>
+<meta name="author" content="Deri Siswara and Nafisa Berliana Indah Pratiwi">
+<meta name="description" content="6.1 PCA # impor data dari excel, beri nama: Provinsi library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi = read_excel(&quot;Data/provinsi.xlsx&quot;) Prov.scaled =...">
+<meta name="generator" content="bookdown 0.38 with bs4_book()">
+<meta property="og:title" content="Chapter 6 PCA Analysis and Biplot | Quantitative Methods with RStudio: Application for Management and Business Research">
+<meta property="og:type" content="book">
+<meta property="og:description" content="6.1 PCA # impor data dari excel, beri nama: Provinsi library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi = read_excel(&quot;Data/provinsi.xlsx&quot;) Prov.scaled =...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 PCA Analysis and Biplot | Quantitative Methods with RStudio: Application for Management and Business Research">
+<meta name="twitter:description" content="6.1 PCA # impor data dari excel, beri nama: Provinsi library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi = read_excel(&quot;Data/provinsi.xlsx&quot;) Prov.scaled =...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Quantitative Methods with RStudio: Application for Management and Business Research</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="basics-of-r.html"><span class="header-section-number">1</span> Basics of R</a></li>
+<li><a class="" href="nonparametric-statistics.html"><span class="header-section-number">2</span> Nonparametric Statistics</a></li>
+<li><a class="" href="logistic-regression.html"><span class="header-section-number">3</span> Logistic Regression</a></li>
+<li><a class="" href="discriminant-analysis.html"><span class="header-section-number">4</span> Discriminant Analysis</a></li>
+<li><a class="" href="cluster-analysis.html"><span class="header-section-number">5</span> Cluster Analysis</a></li>
+<li><a class="active" href="pca-analysis-and-biplot.html"><span class="header-section-number">6</span> PCA Analysis and Biplot</a></li>
+<li><a class="" href="factor-analysis-and-structural-equation-modeling-sem.html"><span class="header-section-number">7</span> Factor Analysis and Structural Equation Modeling (SEM)</a></li>
+<li><a class="" href="analytic-hierarchy-process-ahp.html"><span class="header-section-number">8</span> Analytic Hierarchy Process (AHP)</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dekayzds/ds-multivariate">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="pca-analysis-and-biplot" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> PCA Analysis and Biplot<a class="anchor" aria-label="anchor" href="#pca-analysis-and-biplot"><i class="fas fa-link"></i></a>
+</h1>
+<div id="pca" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> PCA<a class="anchor" aria-label="anchor" href="#pca"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># impor data dari excel, beri nama: Provinsi</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'readxl' was built under R version 4.2.3</span></span>
+<span><span class="va">Provinsi</span> <span class="op">=</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/provinsi.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">Prov.scaled</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">Provinsi</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        IPM   UHH    RLS   PPK   Gini</span></span>
+<span><span class="co">#&gt; IPM  1.000 0.780  0.811 0.872  0.159</span></span>
+<span><span class="co">#&gt; UHH  0.780 1.000  0.447 0.581  0.153</span></span>
+<span><span class="co">#&gt; RLS  0.811 0.447  1.000 0.637 -0.059</span></span>
+<span><span class="co">#&gt; PPK  0.872 0.581  0.637 1.000  0.249</span></span>
+<span><span class="co">#&gt; Gini 0.159 0.153 -0.059 0.249  1.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># PCA langkah manual</span></span>
+<span><span class="va">Prov.eigen</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/eigen.html">eigen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Prov.eigen</span></span>
+<span><span class="co">#&gt; eigen() decomposition</span></span>
+<span><span class="co">#&gt; $values</span></span>
+<span><span class="co">#&gt; [1] 3.11653307 1.04597347 0.52865259 0.28088555 0.02795532</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $vectors</span></span>
+<span><span class="co">#&gt;            [,1]        [,2]         [,3]          [,4]</span></span>
+<span><span class="co">#&gt; [1,] -0.5601680 -0.05311199  0.005227509 -0.0006949187</span></span>
+<span><span class="co">#&gt; [2,] -0.4513030  0.05646383  0.811065327  0.2024129889</span></span>
+<span><span class="co">#&gt; [3,] -0.4591728 -0.33781331 -0.497619343  0.5648220282</span></span>
+<span><span class="co">#&gt; [4,] -0.5069166  0.09086739 -0.227624805 -0.7546468667</span></span>
+<span><span class="co">#&gt; [5,] -0.1213811  0.93360390 -0.206658283  0.2655422416</span></span>
+<span><span class="co">#&gt;             [,5]</span></span>
+<span><span class="co">#&gt; [1,]  0.82665781</span></span>
+<span><span class="co">#&gt; [2,] -0.30714735</span></span>
+<span><span class="co">#&gt; [3,] -0.32923179</span></span>
+<span><span class="co">#&gt; [4,] -0.33685862</span></span>
+<span><span class="co">#&gt; [5,] -0.02073819</span></span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Prov.eigen</span><span class="op">$</span><span class="va">values</span></span>
+<span><span class="co">#&gt; [1] 3.11653307 1.04597347 0.52865259 0.28088555 0.02795532</span></span>
+<span><span class="va">Prov.eigen</span><span class="op">$</span><span class="va">values</span><span class="op">/</span><span class="fl">5</span></span>
+<span><span class="co">#&gt; [1] 0.623306615 0.209194694 0.105730518 0.056177109</span></span>
+<span><span class="co">#&gt; [5] 0.005591064</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">Prov.eigen</span><span class="op">$</span><span class="va">values</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.6233066 0.8325013 0.9382318 0.9944089 1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Prov.pc</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">Prov.eigen</span><span class="op">$</span><span class="va">vectors</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">Prov.pc</span>,<span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         [,1]   [,2]   [,3]   [,4]   [,5]</span></span>
+<span><span class="co">#&gt;  [1,] -0.063 -1.072 -0.028  0.684  0.141</span></span>
+<span><span class="co">#&gt;  [2,] -0.269 -0.998 -0.667  0.411  0.001</span></span>
+<span><span class="co">#&gt;  [3,] -0.170 -1.363 -0.172 -0.125  0.240</span></span>
+<span><span class="co">#&gt;  [4,] -0.771 -1.003  0.373  0.025  0.016</span></span>
+<span><span class="co">#&gt;  [5,] -0.032 -0.585  0.653 -0.002  0.008</span></span>
+<span><span class="co">#&gt;  [6,]  0.289  0.226  0.046 -0.122 -0.055</span></span>
+<span><span class="co">#&gt;  [7,]  0.167 -0.380 -0.246  0.160  0.149</span></span>
+<span><span class="co">#&gt;  [8,]  0.632 -0.498  0.644 -0.115 -0.054</span></span>
+<span><span class="co">#&gt;  [9,] -0.057 -1.798  0.675 -1.464 -0.089</span></span>
+<span><span class="co">#&gt; [10,] -2.171 -0.475 -1.111 -0.280 -0.100</span></span>
+<span><span class="co">#&gt; [11,] -5.201  0.488 -1.517 -0.455 -0.423</span></span>
+<span><span class="co">#&gt; [12,] -0.699  0.908  0.818  0.388 -0.141</span></span>
+<span><span class="co">#&gt; [13,] -0.467  0.567  1.901 -0.226 -0.064</span></span>
+<span><span class="co">#&gt; [14,] -3.637  1.770  0.377  0.349  0.361</span></span>
+<span><span class="co">#&gt; [15,] -0.211  1.726  0.527 -0.300  0.118</span></span>
+<span><span class="co">#&gt; [16,] -0.763  0.414 -0.365 -0.198  0.007</span></span>
+<span><span class="co">#&gt; [17,] -1.962  0.494  0.024 -0.719  0.052</span></span>
+<span><span class="co">#&gt; [18,]  1.779  0.864 -0.537 -0.824  0.322</span></span>
+<span><span class="co">#&gt; [19,]  2.630  0.251 -0.136  0.131  0.011</span></span>
+<span><span class="co">#&gt; [20,]  1.501 -0.351  1.137 -0.243 -0.049</span></span>
+<span><span class="co">#&gt; [21,]  0.004 -0.801  0.195 -0.277 -0.039</span></span>
+<span><span class="co">#&gt; [22,]  0.104 -0.191 -0.358 -0.828  0.030</span></span>
+<span><span class="co">#&gt; [23,] -2.225 -0.963  0.752  0.305  0.020</span></span>
+<span><span class="co">#&gt; [24,] -0.162 -1.278  1.179  0.698 -0.173</span></span>
+<span><span class="co">#&gt; [25,] -1.101  0.544 -0.154  0.823 -0.143</span></span>
+<span><span class="co">#&gt; [26,]  0.847 -0.438 -0.472  0.097  0.061</span></span>
+<span><span class="co">#&gt; [27,] -0.276  1.813 -0.105  0.254  0.105</span></span>
+<span><span class="co">#&gt; [28,] -0.147  0.982  0.109  0.925 -0.004</span></span>
+<span><span class="co">#&gt; [29,]  1.266  1.405 -0.356 -0.169  0.136</span></span>
+<span><span class="co">#&gt; [30,]  2.501 -0.280 -0.787 -0.540  0.062</span></span>
+<span><span class="co">#&gt; [31,]  0.929 -1.487 -1.397  0.735  0.080</span></span>
+<span><span class="co">#&gt; [32,]  1.193 -0.966 -0.326  0.739 -0.008</span></span>
+<span><span class="co">#&gt; [33,]  2.735  0.936 -0.533  0.218 -0.091</span></span>
+<span><span class="co">#&gt; [34,]  3.806  1.539 -0.145 -0.057 -0.487</span></span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># dengan fungsi prcomp</span></span>
+<span><span class="va">pc</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Prov.scaled</span>, center<span class="op">=</span><span class="cn">TRUE</span>, scale<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Importance of components:</span></span>
+<span><span class="co">#&gt;                           PC1    PC2    PC3     PC4     PC5</span></span>
+<span><span class="co">#&gt; Standard deviation     1.7654 1.0227 0.7271 0.52999 0.16720</span></span>
+<span><span class="co">#&gt; Proportion of Variance 0.6233 0.2092 0.1057 0.05618 0.00559</span></span>
+<span><span class="co">#&gt; Cumulative Proportion  0.6233 0.8325 0.9382 0.99441 1.00000</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">pc</span><span class="op">$</span><span class="va">x</span>,<span class="fl">3</span><span class="op">)</span><span class="co">#scores</span></span>
+<span><span class="co">#&gt;          PC1    PC2    PC3    PC4    PC5</span></span>
+<span><span class="co">#&gt;  [1,] -0.063 -1.072  0.028  0.684 -0.141</span></span>
+<span><span class="co">#&gt;  [2,] -0.269 -0.998  0.667  0.411 -0.001</span></span>
+<span><span class="co">#&gt;  [3,] -0.170 -1.363  0.172 -0.125 -0.240</span></span>
+<span><span class="co">#&gt;  [4,] -0.771 -1.003 -0.373  0.025 -0.016</span></span>
+<span><span class="co">#&gt;  [5,] -0.032 -0.585 -0.653 -0.002 -0.008</span></span>
+<span><span class="co">#&gt;  [6,]  0.289  0.226 -0.046 -0.122  0.055</span></span>
+<span><span class="co">#&gt;  [7,]  0.167 -0.380  0.246  0.160 -0.149</span></span>
+<span><span class="co">#&gt;  [8,]  0.632 -0.498 -0.644 -0.115  0.054</span></span>
+<span><span class="co">#&gt;  [9,] -0.057 -1.798 -0.675 -1.464  0.089</span></span>
+<span><span class="co">#&gt; [10,] -2.171 -0.475  1.111 -0.280  0.100</span></span>
+<span><span class="co">#&gt; [11,] -5.201  0.488  1.517 -0.455  0.423</span></span>
+<span><span class="co">#&gt; [12,] -0.699  0.908 -0.818  0.388  0.141</span></span>
+<span><span class="co">#&gt; [13,] -0.467  0.567 -1.901 -0.226  0.064</span></span>
+<span><span class="co">#&gt; [14,] -3.637  1.770 -0.377  0.349 -0.361</span></span>
+<span><span class="co">#&gt; [15,] -0.211  1.726 -0.527 -0.300 -0.118</span></span>
+<span><span class="co">#&gt; [16,] -0.763  0.414  0.365 -0.198 -0.007</span></span>
+<span><span class="co">#&gt; [17,] -1.962  0.494 -0.024 -0.719 -0.052</span></span>
+<span><span class="co">#&gt; [18,]  1.779  0.864  0.537 -0.824 -0.322</span></span>
+<span><span class="co">#&gt; [19,]  2.630  0.251  0.136  0.131 -0.011</span></span>
+<span><span class="co">#&gt; [20,]  1.501 -0.351 -1.137 -0.243  0.049</span></span>
+<span><span class="co">#&gt; [21,]  0.004 -0.801 -0.195 -0.277  0.039</span></span>
+<span><span class="co">#&gt; [22,]  0.104 -0.191  0.358 -0.828 -0.030</span></span>
+<span><span class="co">#&gt; [23,] -2.225 -0.963 -0.752  0.305 -0.020</span></span>
+<span><span class="co">#&gt; [24,] -0.162 -1.278 -1.179  0.698  0.173</span></span>
+<span><span class="co">#&gt; [25,] -1.101  0.544  0.154  0.823  0.143</span></span>
+<span><span class="co">#&gt; [26,]  0.847 -0.438  0.472  0.097 -0.061</span></span>
+<span><span class="co">#&gt; [27,] -0.276  1.813  0.105  0.254 -0.105</span></span>
+<span><span class="co">#&gt; [28,] -0.147  0.982 -0.109  0.925  0.004</span></span>
+<span><span class="co">#&gt; [29,]  1.266  1.405  0.356 -0.169 -0.136</span></span>
+<span><span class="co">#&gt; [30,]  2.501 -0.280  0.787 -0.540 -0.062</span></span>
+<span><span class="co">#&gt; [31,]  0.929 -1.487  1.397  0.735 -0.080</span></span>
+<span><span class="co">#&gt; [32,]  1.193 -0.966  0.326  0.739  0.008</span></span>
+<span><span class="co">#&gt; [33,]  2.735  0.936  0.533  0.218  0.091</span></span>
+<span><span class="co">#&gt; [34,]  3.806  1.539  0.145 -0.057  0.487</span></span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">pc</span><span class="op">$</span><span class="va">rotation</span>,<span class="fl">3</span><span class="op">)</span>  <span class="co">#loadings</span></span>
+<span><span class="co">#&gt;         PC1    PC2    PC3    PC4    PC5</span></span>
+<span><span class="co">#&gt; IPM  -0.560 -0.053 -0.005 -0.001 -0.827</span></span>
+<span><span class="co">#&gt; UHH  -0.451  0.056 -0.811  0.202  0.307</span></span>
+<span><span class="co">#&gt; RLS  -0.459 -0.338  0.498  0.565  0.329</span></span>
+<span><span class="co">#&gt; PPK  -0.507  0.091  0.228 -0.755  0.337</span></span>
+<span><span class="co">#&gt; Gini -0.121  0.934  0.207  0.266  0.021</span></span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Bab6_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/screeplot.html">screeplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pc</span>, type<span class="op">=</span><span class="st">"line"</span>, main<span class="op">=</span><span class="st">"Scree plot"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Bab6_files/figure-html/unnamed-chunk-7-2.png" width="672"></div>
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># korelasi variabel asli dengan PC</span></span>
+<span><span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">Prov.pc</span>, <span class="va">Prov.scaled</span><span class="op">)</span></span>
+<span><span class="va">korelasi</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="va">korelasi</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                            </span></span>
+<span><span class="co">#&gt; IPM  -0.9889040 -0.05431915</span></span>
+<span><span class="co">#&gt; UHH  -0.7967169  0.05774717</span></span>
+<span><span class="co">#&gt; RLS  -0.8106101 -0.34549128</span></span>
+<span><span class="co">#&gt; PPK  -0.8948956  0.09293267</span></span>
+<span><span class="co">#&gt; Gini -0.2142826  0.95482326</span></span></code></pre></div>
+</div>
+<div id="biplot" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> Biplot<a class="anchor" aria-label="anchor" href="#biplot"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># biplot</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.sthda.com/english/rpkgs/factoextra">factoextra</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: ggplot2</span></span>
+<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.2.3</span></span>
+<span><span class="co">#&gt; Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_pca.html">fviz_pca</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Bab6_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># alternatif bentuk biplot</span></span>
+<span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="co"># remotes::install_github("vqv/ggbiplot")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/vqv/ggbiplot">ggbiplot</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: plyr</span></span>
+<span><span class="co">#&gt; Warning: package 'plyr' was built under R version 4.2.3</span></span>
+<span><span class="co">#&gt; Loading required package: scales</span></span>
+<span><span class="co">#&gt; Warning: package 'scales' was built under R version 4.2.3</span></span>
+<span><span class="co">#&gt; Loading required package: grid</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ggbiplot/man/ggbiplot.html">ggbiplot</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Bab6_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">biplot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/ggbiplot/man/ggbiplot.html">ggbiplot</a></span><span class="op">(</span>pcobj <span class="op">=</span> <span class="va">pc</span>,</span>
+<span>                  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span>
+<span>                  obs.scale <span class="op">=</span> <span class="fl">1</span>, var.scale <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">Provinsi</span><span class="op">)</span>,</span>
+<span>                  varname.size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                  varname.abbrev <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                  var.axes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                  group <span class="op">=</span> <span class="va">Provinsi</span><span class="op">$</span><span class="va">Region</span><span class="op">)</span></span>
+<span><span class="va">biplot</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Bab6_files/figure-html/unnamed-chunk-11-1.png" width="672"></div>
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">biplot2</span> <span class="op">=</span> <span class="va">biplot</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>  title <span class="op">=</span> <span class="st">"PCA Indikator Kualitas Hidup Provinsi"</span>, </span>
+<span>  color <span class="op">=</span> <span class="st">"Region"</span><span class="op">)</span></span>
+<span><span class="va">biplot2</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Bab6_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="cluster-analysis.html"><span class="header-section-number">5</span> Cluster Analysis</a></div>
+<div class="next"><a href="factor-analysis-and-structural-equation-modeling-sem.html"><span class="header-section-number">7</span> Factor Analysis and Structural Equation Modeling (SEM)</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pca-analysis-and-biplot"><span class="header-section-number">6</span> PCA Analysis and Biplot</a></li>
+<li><a class="nav-link" href="#pca"><span class="header-section-number">6.1</span> PCA</a></li>
+<li><a class="nav-link" href="#biplot"><span class="header-section-number">6.2</span> Biplot</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dekayzds/ds-multivariate/blob/master/06-Bab6.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dekayzds/ds-multivariate/edit/master/06-Bab6.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Quantitative Methods with RStudio: Application for Management and Business Research</strong>" was written by Deri Siswara and Nafisa Berliana Indah Pratiwi. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

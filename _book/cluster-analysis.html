@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research</title>
+<meta name="author" content="Deri Siswara and Nafisa Berliana Indah Pratiwi">
+<meta name="description" content="5.1 Metode berhirarki Ref: https://rpubs.com/odenipinedo/cluster-analysis-in-R library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi &lt;-...">
+<meta name="generator" content="bookdown 0.38 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research">
+<meta property="og:type" content="book">
+<meta property="og:description" content="5.1 Metode berhirarki Ref: https://rpubs.com/odenipinedo/cluster-analysis-in-R library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi &lt;-...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 Cluster Analysis | Quantitative Methods with RStudio: Application for Management and Business Research">
+<meta name="twitter:description" content="5.1 Metode berhirarki Ref: https://rpubs.com/odenipinedo/cluster-analysis-in-R library(readxl) #&gt; Warning: package 'readxl' was built under R version 4.2.3 Provinsi &lt;-...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Quantitative Methods with RStudio: Application for Management and Business Research</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="basics-of-r.html"><span class="header-section-number">1</span> Basics of R</a></li>
+<li><a class="" href="nonparametric-statistics.html"><span class="header-section-number">2</span> Nonparametric Statistics</a></li>
+<li><a class="" href="logistic-regression.html"><span class="header-section-number">3</span> Logistic Regression</a></li>
+<li><a class="" href="discriminant-analysis.html"><span class="header-section-number">4</span> Discriminant Analysis</a></li>
+<li><a class="active" href="cluster-analysis.html"><span class="header-section-number">5</span> Cluster Analysis</a></li>
+<li><a class="" href="pca-analysis-and-biplot.html"><span class="header-section-number">6</span> PCA Analysis and Biplot</a></li>
+<li><a class="" href="factor-analysis-and-structural-equation-modeling-sem.html"><span class="header-section-number">7</span> Factor Analysis and Structural Equation Modeling (SEM)</a></li>
+<li><a class="" href="analytic-hierarchy-process-ahp.html"><span class="header-section-number">8</span> Analytic Hierarchy Process (AHP)</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dekayzds/ds-multivariate">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="cluster-analysis" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Cluster Analysis<a class="anchor" aria-label="anchor" href="#cluster-analysis"><i class="fas fa-link"></i></a>
+</h1>
+<div id="metode-berhirarki" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Metode berhirarki<a class="anchor" aria-label="anchor" href="#metode-berhirarki"><i class="fas fa-link"></i></a>
+</h2>
+<p>Ref:
+<a href="https://rpubs.com/odenipinedo/cluster-analysis-in-R" class="uri">https://rpubs.com/odenipinedo/cluster-analysis-in-R</a></p>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'readxl' was built under R version 4.2.3</span></span>
+<span><span class="va">Provinsi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/provinsi.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">Prov.scaled</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">Provinsi</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span> <span class="op">=</span> <span class="va">Provinsi</span><span class="op">$</span><span class="va">Provinsi</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                IPM         UHH        RLS         PPK</span></span>
+<span><span class="co">#&gt; Aceh    0.20822137  0.04044611  0.7444782 -0.62264434</span></span>
+<span><span class="co">#&gt; Sumut   0.20085709 -0.39282591  1.0245728 -0.11277090</span></span>
+<span><span class="co">#&gt; Sumbar  0.36532598 -0.23835502  0.4747574  0.01481560</span></span>
+<span><span class="co">#&gt; Riau    0.50033775  0.59428078  0.5162529  0.19012890</span></span>
+<span><span class="co">#&gt; Jambi   0.05848104  0.50762638 -0.1165536 -0.18648754</span></span>
+<span><span class="co">#&gt; Sumsel -0.21890679 -0.08765171 -0.2825356 -0.02582306</span></span>
+<span><span class="co">#&gt;              Gini</span></span>
+<span><span class="co">#&gt; Aceh   -0.8089350</span></span>
+<span><span class="co">#&gt; Sumut  -0.6516207</span></span>
+<span><span class="co">#&gt; Sumbar -1.2546590</span></span>
+<span><span class="co">#&gt; Riau   -0.9138112</span></span>
+<span><span class="co">#&gt; Jambi  -0.6778397</span></span>
+<span><span class="co">#&gt; Sumsel  0.1349510</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## membuat dissimilarity matrix</span></span>
+<span><span class="va">dprov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, method<span class="op">=</span><span class="st">"euclidean"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">c.comp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"complete"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.comp</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.7853523</span></span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">c.sing</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"single"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.sing</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.7905858</span></span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">c.avrg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.avrg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.8092689</span></span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">c.ward</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"ward.D"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.ward</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.5336018</span></span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">c.ctrd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="va">dprov</span>, method <span class="op">=</span> <span class="st">"centroid"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dprov</span> , <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.ctrd</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.7700878</span></span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.sthda.com/english/rpkgs/factoextra">factoextra</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: ggplot2</span></span>
+<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.2.3</span></span>
+<span><span class="co">#&gt; Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_dend.html">fviz_dend</a></span><span class="op">(</span><span class="va">c.avrg</span>, cex <span class="op">=</span> <span class="fl">0.5</span>, </span>
+<span>          main <span class="op">=</span> <span class="st">"Cluster Dendrogram average linkage"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use</span></span>
+<span><span class="co">#&gt; "none" instead as of ggplot2 3.3.4.</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the factoextra</span></span>
+<span><span class="co">#&gt;   package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at</span></span>
+<span><span class="co">#&gt;   &lt;https://github.com/kassambara/factoextra/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
+<span><span class="co">#&gt; this warning was generated.</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">avg_coph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cophenetic.html">cophenetic</a></span><span class="op">(</span><span class="va">c.avrg</span><span class="op">)</span></span>
+<span><span class="va">avg_clust</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">avg_clust</span><span class="op">)</span></span>
+<span><span class="co">#&gt; avg_clust</span></span>
+<span><span class="co">#&gt;  1  2  3  4 </span></span>
+<span><span class="co">#&gt; 26  1  1  6</span></span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_dend.html">fviz_dend</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>          k_colors <span class="op">=</span> <span class="st">"jco"</span>, </span>
+<span>          rect <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>          main <span class="op">=</span> <span class="st">"Average Linkage Cluster"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">clValid</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'clValid' was built under R version 4.2.3</span></span>
+<span><span class="co">#&gt; Loading required package: cluster</span></span>
+<span><span class="co">#&gt; Warning: package 'cluster' was built under R version 4.2.3</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://svn.r-project.org/R-packages/trunk/cluster/">cluster</a></span><span class="op">)</span></span>
+<span><span class="co"># internal measures</span></span>
+<span><span class="va">internal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/clValid/man/clValid.html">clValid</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, nClust <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">6</span>, </span>
+<span>                    clMethods <span class="op">=</span> <span class="st">"hierarchical"</span>, </span>
+<span>                    validation <span class="op">=</span> <span class="st">"internal"</span>, </span>
+<span>                    metric <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
+<span>                    method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">internal</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Clustering Methods:</span></span>
+<span><span class="co">#&gt;  hierarchical </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cluster sizes:</span></span>
+<span><span class="co">#&gt;  2 3 4 5 6 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Validation Measures:</span></span>
+<span><span class="co">#&gt;                                  2       3       4       5       6</span></span>
+<span><span class="co">#&gt;                                                                   </span></span>
+<span><span class="co">#&gt; hierarchical Connectivity   4.5246 10.3012 11.6345 18.3198 24.1508</span></span>
+<span><span class="co">#&gt;              Dunn           0.3637  0.3703  0.3703  0.3224  0.3592</span></span>
+<span><span class="co">#&gt;              Silhouette     0.4915  0.3484  0.3092  0.2567  0.3117</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Optimal Scores:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;              Score  Method       Clusters</span></span>
+<span><span class="co">#&gt; Connectivity 4.5246 hierarchical 2       </span></span>
+<span><span class="co">#&gt; Dunn         0.3703 hierarchical 3       </span></span>
+<span><span class="co">#&gt; Silhouette   0.4915 hierarchical 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_dend.html">fviz_dend</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>          k_colors <span class="op">=</span> <span class="st">"jco"</span>, </span>
+<span>          rect <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>          main <span class="op">=</span> <span class="st">"Average Linkage Cluster"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">group</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span><span class="op">(</span><span class="va">c.avrg</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">group</span></span>
+<span><span class="co">#&gt;      Aceh     Sumut    Sumbar      Riau     Jambi    Sumsel </span></span>
+<span><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
+<span><span class="co">#&gt;  Bengkulu   Lampung     Babel     Kepri       DKI     Jabar </span></span>
+<span><span class="co">#&gt;         1         1         1         1         2         1 </span></span>
+<span><span class="co">#&gt;    Jateng       DIY     Jatim    Banten      Bali       NTB </span></span>
+<span><span class="co">#&gt;         1         2         1         1         1         1 </span></span>
+<span><span class="co">#&gt;       NTT    Kalbar   Kalteng    Kalsel    Kaltim   Kaltara </span></span>
+<span><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
+<span><span class="co">#&gt;     Sulut   Sulteng    Sulsel    Sultra Gorontalo    Sulbar </span></span>
+<span><span class="co">#&gt;         1         1         1         1         1         1 </span></span>
+<span><span class="co">#&gt;    Maluku     Malut     Pabar     Papua </span></span>
+<span><span class="co">#&gt;         1         1         1         1</span></span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_cluster.html">fviz_cluster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Prov.scaled</span>, </span>
+<span>                  cluster <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-14-1.png" width="672"></div>
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span><span class="va">Prov.scaled</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Standard deviations (1, .., p=5):</span></span>
+<span><span class="co">#&gt; [1] 1.7653705 1.0227284 0.7270850 0.5299864 0.1671984</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Rotation (n x k) = (5 x 5):</span></span>
+<span><span class="co">#&gt;             PC1         PC2          PC3           PC4</span></span>
+<span><span class="co">#&gt; IPM  -0.5601680 -0.05311199 -0.005227509 -0.0006949187</span></span>
+<span><span class="co">#&gt; UHH  -0.4513030  0.05646383 -0.811065327  0.2024129889</span></span>
+<span><span class="co">#&gt; RLS  -0.4591728 -0.33781331  0.497619343  0.5648220282</span></span>
+<span><span class="co">#&gt; PPK  -0.5069166  0.09086739  0.227624805 -0.7546468667</span></span>
+<span><span class="co">#&gt; Gini -0.1213811  0.93360390  0.206658283  0.2655422416</span></span>
+<span><span class="co">#&gt;              PC5</span></span>
+<span><span class="co">#&gt; IPM  -0.82665781</span></span>
+<span><span class="co">#&gt; UHH   0.30714735</span></span>
+<span><span class="co">#&gt; RLS   0.32923179</span></span>
+<span><span class="co">#&gt; PPK   0.33685862</span></span>
+<span><span class="co">#&gt; Gini  0.02073819</span></span></code></pre></div>
+</div>
+<div id="metode-tidak-berhirarki---kmeans" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Metode tidak berhirarki - kmeans<a class="anchor" aria-label="anchor" href="#metode-tidak-berhirarki---kmeans"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_nbclust.html">fviz_nbclust</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, <span class="va">kmeans</span>, method <span class="op">=</span> <span class="st">"wss"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-16-1.png" width="672"></div>
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_nbclust.html">fviz_nbclust</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, <span class="va">kmeans</span>, method <span class="op">=</span> <span class="st">"silhouette"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-17-1.png" width="672"></div>
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">km</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span><span class="op">(</span><span class="va">Prov.scaled</span>, centers<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">km</span></span>
+<span><span class="co">#&gt; K-means clustering with 4 clusters of sizes 5, 7, 16, 6</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cluster means:</span></span>
+<span><span class="co">#&gt;           IPM        UHH        RLS         PPK       Gini</span></span>
+<span><span class="co">#&gt; 1  1.67223995  1.1202353  1.3689855  1.75840321  0.6331131</span></span>
+<span><span class="co">#&gt; 2  0.22785944  0.6620973 -0.1491572  0.09292014  0.9739608</span></span>
+<span><span class="co">#&gt; 3 -0.08819085 -0.1001318  0.1246391 -0.24567350 -0.7991029</span></span>
+<span><span class="co">#&gt; 4 -1.42419372 -1.4389581 -1.2991755 -0.91861351  0.4670591</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Clustering vector:</span></span>
+<span><span class="co">#&gt;      Aceh     Sumut    Sumbar      Riau     Jambi    Sumsel </span></span>
+<span><span class="co">#&gt;         3         3         3         3         3         3 </span></span>
+<span><span class="co">#&gt;  Bengkulu   Lampung     Babel     Kepri       DKI     Jabar </span></span>
+<span><span class="co">#&gt;         3         3         3         1         1         2 </span></span>
+<span><span class="co">#&gt;    Jateng       DIY     Jatim    Banten      Bali       NTB </span></span>
+<span><span class="co">#&gt;         2         1         2         2         1         4 </span></span>
+<span><span class="co">#&gt;       NTT    Kalbar   Kalteng    Kalsel    Kaltim   Kaltara </span></span>
+<span><span class="co">#&gt;         4         3         3         3         1         3 </span></span>
+<span><span class="co">#&gt;     Sulut   Sulteng    Sulsel    Sultra Gorontalo    Sulbar </span></span>
+<span><span class="co">#&gt;         2         3         2         2         4         4 </span></span>
+<span><span class="co">#&gt;    Maluku     Malut     Pabar     Papua </span></span>
+<span><span class="co">#&gt;         3         3         4         4 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Within cluster sum of squares by cluster:</span></span>
+<span><span class="co">#&gt; [1] 17.054859  7.933134 22.111511  7.711994</span></span>
+<span><span class="co">#&gt;  (between_SS / total_SS =  66.8 %)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Available components:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [1] "cluster"      "centers"      "totss"       </span></span>
+<span><span class="co">#&gt; [4] "withinss"     "tot.withinss" "betweenss"   </span></span>
+<span><span class="co">#&gt; [7] "size"         "iter"         "ifault"</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_cluster.html">fviz_cluster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Prov.scaled</span>, cluster <span class="op">=</span> <span class="va">km</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Bab5_files/figure-html/unnamed-chunk-19-1.png" width="672"></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="discriminant-analysis.html"><span class="header-section-number">4</span> Discriminant Analysis</a></div>
+<div class="next"><a href="pca-analysis-and-biplot.html"><span class="header-section-number">6</span> PCA Analysis and Biplot</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#cluster-analysis"><span class="header-section-number">5</span> Cluster Analysis</a></li>
+<li><a class="nav-link" href="#metode-berhirarki"><span class="header-section-number">5.1</span> Metode berhirarki</a></li>
+<li><a class="nav-link" href="#metode-tidak-berhirarki---kmeans"><span class="header-section-number">5.2</span> Metode tidak berhirarki - kmeans</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dekayzds/ds-multivariate/blob/master/05-Bab5.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dekayzds/ds-multivariate/edit/master/05-Bab5.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Quantitative Methods with RStudio: Application for Management and Business Research</strong>" was written by Deri Siswara and Nafisa Berliana Indah Pratiwi. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

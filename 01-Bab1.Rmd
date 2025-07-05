@@ -1,0 +1,331 @@
+# Basics of R
+
+## Introduction
+
+```{r}
+A <- 2  
+```
+
+```{r}
+A # Print A
+```
+
+```{r}
+A = 2
+A
+```
+
+```{r}
+B <- "Halo Semua"
+B
+```
+
+```{r}
+a<-10 # Space is not sensitive but lettercase is sensitive.
+A
+```
+
+```{r}
+a
+```
+
+```{r}
+# Arithmetic operation
+x <- 5
+y <- 3
+x + y     
+x - y     
+x * y     
+x / y     
+```
+
+```{r}
+# Logic operation
+a <- TRUE
+b <- FALSE
+a & b     
+a | b     
+!a        
+```
+
+```{r}
+x <- 5
+y <- 3
+x > y     
+x < y     
+x == y    
+x >= y    
+x <= y    
+```
+
+## Types of Objects in R
+
+### Vector
+
+```{r}
+a1 <- c(2,4,7,3) # Numeric vector
+a2 <- c("one","two","three") # Character vector
+a3 <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) # Logical vector
+```
+
+```{r}
+a1
+a3[4]        
+a2[c(1,3)]   
+a1[-1]       
+a1[2:4]      
+```
+
+```{r}
+a <- c(1, 2, 3)
+b <- c(4, 5, 6)
+c <- c(a, b)      
+c                 
+c[1:3]            
+d <- a + b        
+d                 
+```
+
+
+```{r}
+a4 <- 1:12 
+b1 <- matrix(a4,3,4)
+b2 <- matrix(a4,3,4,byrow=TRUE) 
+b3 <- matrix(1:14,4,4)
+```
+
+```{r}
+b1
+```
+```{r}
+b2
+```
+```{r}
+b3
+```
+
+```{r}
+b2[2,3]   
+```
+
+```{r}
+b2[1:2,]  
+```
+
+```{r}
+b2[c(1,3),-2] 
+```
+
+```{r}
+dim(b2) 
+```
+
+```{r}
+m1 <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
+m2 <- matrix(c(7, 8, 9, 10, 11, 12), nrow = 2, ncol = 3)
+```
+
+
+```{r}
+m3 <- m1 + m2
+m3
+```
+
+
+```{r}
+m4 <- m1 %*% t(m2)
+m4
+```
+
+### Factor
+
+```{r}
+a5 <- c("A","B","AB","O")
+d1 <- factor(a5) 
+levels(d1)
+```
+
+```{r}
+levels(d1) <- c("Darah A","Darah AB","Darah B","Darah O")
+d1
+```
+
+```{r}
+a6 <- c("SMA","SD","SMP","SMA","SMA","SMA","SMA","SMA","SMA","SMA","SMA","SMA","SMA")
+d5 <- factor(a6, levels=c("SD","SMP","SMA")) # Skala pengukuran ordinal  
+levels(d5) 
+```
+
+```{r}
+d5
+```
+
+### List
+
+
+```{r}
+a1; b2; d1
+```
+
+```{r}
+e1 <- list(a1,b2,d1)
+e2 <- list(vect=a1,mat=b2,fac=d1) 
+e1
+e2
+```
+
+```{r}
+e1[[1]][2] 
+e2$fac 
+e2[2] 
+names(e2)
+```
+
+### Data Frame
+
+```{r}
+Angka <- 11:15
+Huruf <- factor(LETTERS[6:10])
+f1 <- data.frame(Angka,Huruf)
+f1
+```
+
+```{r}
+f1[1,2] 
+f1$Angka 
+f1[,"Huruf"] 
+colnames(f1) 
+```
+
+```{r}
+str(f1)
+```
+
+## Data Frame Management
+
+```{r}
+data(iris) 
+```
+
+```{r}
+head(iris) 
+```
+
+```{r}
+tail(iris) 
+```
+
+```{r}
+str(iris)
+```
+
+### R Package
+
+```{r}
+# install.packages("readxl") - code to install R package
+library(readxl)
+```
+
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+```
+
+### Data Management With `dplyr`
+```{r}
+head(iris)
+```
+
+
+```{r}
+irisbaru  <- mutate(iris, sepal2 = Sepal.Length + Sepal.Width)
+```
+
+```{r}
+head(irisbaru)
+```
+
+
+```{r}
+irisetosa <- filter(iris, Species=="setosa")
+head(irisetosa)
+```
+
+```{r}
+levels(iris$Species)
+```
+
+```{r}
+irisversicolor <- filter(iris, Species=="setosa"& Petal.Length==1.3)
+head(irisversicolor)
+```
+
+```{r}
+iris3 <- select(iris, Sepal.Length, Species)
+head(iris3)
+```
+
+```{r}
+iris4 <- arrange(iris, Petal.Width)
+head(iris4)
+```
+
+```{r}
+iris4 <- arrange(iris, Species, desc(Petal.Width))
+head(iris4)
+```
+
+```{r}
+names(iris4)[1] <- "length" 
+head(iris4)
+```
+
+```{r}
+head(iris4[,c(-1,-3)])
+```
+
+```{r}
+iris %>% group_by(Species) %>% summarise(rata2_Sepal.Width = mean(Sepal.Width))
+```
+
+
+## Visualization
+
+### Histogram
+
+```{r}
+hist(iris$Sepal.Length)
+```
+
+### Box Plot
+
+```{r}
+boxplot(iris$Sepal.Length)
+```
+
+### Barplot
+
+```{r}
+table(iris$Species)
+```
+
+```{r}
+barplot(table(iris$Species))
+```
+
+### Pie Chart
+
+```{r}
+pie(table(iris$Species))
+```
+
+### Scatter Plot
+
+```{r}
+plot(iris$Sepal.Length,iris$Sepal.Width)
+```
+
+```{r}
+plot(iris$Sepal.Length, iris$Sepal.Width, main = "Sepal Length vs. Sepal Width", 
+     xlab = "Sepal Length", ylab = "Sepal Width", col = "red")
+```

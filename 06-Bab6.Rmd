@@ -1,0 +1,89 @@
+
+# PCA Analysis and Biplot
+
+## PCA
+
+```{r}
+# impor data dari excel, beri nama: Provinsi
+library(readxl)
+Provinsi = read_excel("Data/provinsi.xlsx")
+Prov.scaled = scale(Provinsi[,c(4:8)])
+round(cor(Prov.scaled),3)
+```
+
+```{r}
+# PCA langkah manual
+Prov.eigen = eigen(cov(Prov.scaled))
+Prov.eigen
+```
+
+```{r}
+Prov.eigen$values
+Prov.eigen$values/5
+cumsum(Prov.eigen$values/5)
+```
+
+```{r}
+Prov.pc = as.matrix(Prov.scaled) %*% Prov.eigen$vectors
+round(Prov.pc,3)
+```
+
+```{r}
+# dengan fungsi prcomp
+pc = prcomp(x = Prov.scaled, center=TRUE, scale=TRUE)
+summary(pc)
+round(pc$x,3)#scores
+```
+
+```{r}
+round(pc$rotation,3)  #loadings
+```
+
+```{r}
+plot(pc)
+screeplot(x = pc, type="line", main="Scree plot")
+```
+
+```{r}
+# korelasi variabel asli dengan PC
+data = cbind(Prov.pc, Prov.scaled)
+korelasi = cor(data)
+korelasi[6:10,1:2]
+```
+
+## Biplot
+
+```{r}
+# biplot
+library(factoextra)
+fviz_pca(pc)
+```
+
+```{r}
+# alternatif bentuk biplot
+# install.packages("remotes")
+# remotes::install_github("vqv/ggbiplot")
+library(ggbiplot)
+ggbiplot(pc)
+```
+
+```{r}
+biplot = ggbiplot(pcobj = pc,
+                  choices = c(1,2),
+                  obs.scale = 1, var.scale = 1,
+                  labels = row.names(Provinsi),
+                  varname.size = 3,
+                  varname.abbrev = FALSE,
+                  var.axes = TRUE,
+                  group = Provinsi$Region)
+biplot
+```
+
+```{r}
+biplot2 = biplot + theme_bw() + 
+  theme(legend.position="bottom") + 
+  labs(
+  title = "PCA Indikator Kualitas Hidup Provinsi", 
+  color = "Region")
+biplot2
+```

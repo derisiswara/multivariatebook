@@ -1,0 +1,240 @@
+# Logistic Regression 
+
+## Regresi Logistik Biner
+
+### Data
+
+```{r}
+credit <- read.csv("Data/credit.csv")
+head(credit[,1:5],10)
+```
+
+```{r}
+str(credit)
+```
+
+```{r}
+library(dplyr)
+credit <- credit %>% mutate(across(-c(duration,
+                            credit.amount,
+                            age),as.factor))
+str(credit)
+```
+
+
+### Pemodelan
+
+
+```{r}
+logreg1 <- glm(creditability~.,data=credit,family = "binomial")
+summary(logreg1)
+```
+
+
+### Odds Ratio
+
+```{r}
+beta = round(coef(logreg1),2)
+OR = round(exp(beta),2)
+cbind(beta, OR)
+```
+
+
+### Multikolineratitas
+
+```{r}
+library(car)
+vif(logreg1)
+```
+
+### Akurasi
+
+```{r}
+pred_clas <- ifelse(logreg1$fitted.values > 0.5, 1, 0)
+conf_matrix <- table(credit$creditability, pred_clas)
+conf_matrix
+```
+
+```{r}
+paste0("Akurasi Model:")
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+accuracy
+```
+
+
+### Kebaikan Model
+
+
+```{r}
+#install.packages("performance")
+library(performance)
+#Outliers
+performance::check_outliers(logreg1)
+```
+
+```{r}
+#Metrik
+performance(logreg1)
+```
+
+
+```{r}
+#Goodness Of Fit
+performance_hosmer(logreg1)
+```
+
+## Regresi Logistik Nominal atau Multinominal
+
+### Data
+
+```{r}
+library(readxl)
+students <- read_excel("Data/students.xlsx")
+head(students,10)
+```
+
+```{r}
+str(students)
+```
+
+### Ubah jadi faktor
+
+```{r}
+library(dplyr)
+students <- students %>% mutate(across(-c(read,write,math),as.factor))
+students$prog2 <- relevel(students$prog, ref = "academic")
+str(students)
+```
+
+```{r}
+table(students$ses, students$prog)
+```
+
+
+```{r}
+table(students$gender, students$prog)
+```
+
+### Pemodelan
+
+```{r}
+#install.packages("nnet")
+library(nnet)
+logmultinom <- multinom(prog2 ~ ses + gender + write + read, data = students)
+```
+
+
+```{r}
+summary(logmultinom)
+```
+
+
+```{r}
+z <- summary(logmultinom)$coefficients/summary(logmultinom)$standard.errors
+# 2-tailed z test
+p <- (1 - pnorm(abs(z), 0, 1)) * 2
+p
+```
+
+### Odds Ratio
+
+```{r}
+exp(coef(logmultinom))
+```
+
+### Multikolineratitas
+
+```{r}
+library(car)
+vif(logmultinom)
+```
+
+### Akurasi
+
+```{r}
+df <- students[,c("ses","gender","write","read")]
+```
+
+```{r}
+#install.packages("caret")
+library(caret)
+prediksi <- predict(logmultinom, df, type = "class")
+confusionMatrix(as.factor(prediksi), 
+                students$prog2)
+```
+
+### Kebaikan Model
+
+```{r}
+logmultinom0 <- multinom(prog2 ~ 1, data = students)
+#install.packages("lmtest")
+library(lmtest)
+lrtest(logmultinom0,logmultinom)
+```
+
+## Regresi Logistik Ordinal
+
+### Data
+
+```{r}
+crash <- read.csv("Data/crash.csv")
+head(crash,10)
+```
+
+```{r}
+library(dplyr)
+crash <- crash %>% mutate(across(-c(Respon),as.factor))
+str(crash)
+```
+
+```{r}
+crash$Respon <- ordered(crash$Respon, levels=c("1","2","3","4","5"))
+str(crash)
+```
+
+### Pemodelan
+
+```{r}
+#install.packages("MASS")
+library(MASS)
+orderlog <- polr(Respon~., method='logistic',data=crash)
+summary(orderlog)
+```
+
+### Odds Ratio
+
+```{r}
+koefisien<-coef(summary(orderlog)) 
+exp(koefisien[,1])
+```
+
+```{r}
+# menghitung pvalue
+p <- pnorm(abs(koefisien[,"t value"]), lower.tail = FALSE)*2
+(ctabel<-cbind(round(koefisien,2), "pvalue"=round(p,3))) 
+```
+
+### Multikolineratitas
+
+```{r}
+library(car)
+vif(orderlog)
+```
+
+### Akurasi
+
+```{r}
+df <- crash[,1:3]
+prediksi <- predict(orderlog, df, type = "class")
+confusionMatrix(as.factor(prediksi), 
+                crash$Respon)
+```
+
+### Kebaikan Model
+
+```{r}
+orderlog0 <-polr(Respon~1, method = "logistic", data = crash)
+#install.packages("lmtest")
+library(lmtest)
+lrtest(orderlog0,orderlog)
+```
